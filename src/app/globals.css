@@ -1,0 +1,46 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Base */
+:root {
+  --background: #ffffff;
+  --foreground: #222222;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --background:#222222; --foreground:#ededed; }
+}
+
+html, body { height: 100%; }
+body {
+  background: var(--background);
+  color: var(--foreground);
+  overflow-x: hidden;
+  @apply font-sans;
+}
+
+::selection { @apply bg-brand-secondary/30 text-brand-ink; }
+
+/* Botões de sistema */
+.btn {
+  @apply inline-flex items-center justify-center px-5 py-3 font-semibold transition
+         shadow hover:shadow-brand;
+}
+.btn-primary { @apply bg-brand-primary text-white hover:brightness-110; }
+.btn-outline { @apply border border-brand-primary text-brand-primary hover:bg-brand-primary hover:text-white; }
+.btn-ghost   { @apply text-white/90 hover:text-white; }
+
+
+/* Container padrão */
+.container-xl { @apply max-w-container mx-auto px-4; }
+
+@keyframes logo-marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); } /* metade porque duplicamos os itens */
+}
+
+/* Utilitário da animação (30s contínuos, linear, infinito) */
+.animate-logo-marquee {
+  animation: logo-marquee 30s linear infinite;
+}
+/* Scrollbar customizada */
