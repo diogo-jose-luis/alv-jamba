@@ -3,6 +3,7 @@ import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 type Slide = { src: string; title: string; subtitle?: string };
 
@@ -44,11 +45,14 @@ export default function HeroSlider() {
           {SLIDES.map((s, i) => (
             <div className="relative min-w-0 flex-[0_0_100%]" key={i}>
               <div className="relative h-[72vh] md:h-[78vh]">
-                <img
+                <Image
                   src={s.src}
-                  className="w-full h-full object-cover"
-                  alt=""
+                  alt="..."
+                  fill
+                  className="object-cover"
+                  priority
                 />
+
                 <div className="absolute inset-0 bg-black/40" />
                 <div className="absolute inset-0 bg-gradient-to-tr from-brand-primary/30 via-transparent to-brand-secondary/20" />
 

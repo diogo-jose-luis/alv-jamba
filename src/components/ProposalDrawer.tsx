@@ -7,6 +7,13 @@ import {
   Layers3, Home, Clock8, ShieldCheck, ChevronDown
 } from "lucide-react";
 
+// Tipar o evento customizado
+declare global {
+  interface WindowEventMap {
+    "open-proposal": CustomEvent<void>;
+  }
+}
+
 const SERVICOS = [
   "Segurança Física",
   "Segurança Marítima/Offshore",
@@ -29,8 +36,8 @@ export default function ProposalDrawer() {
 
   useEffect(() => {
     const openHandler = () => setOpen(true);
-    window.addEventListener("open-proposal" as any, openHandler);
-    return () => window.removeEventListener("open-proposal" as any, openHandler);
+    window.addEventListener("open-proposal", openHandler as EventListener);
+    return () => window.removeEventListener("open-proposal", openHandler as EventListener);
   }, []);
 
   useEffect(() => {
@@ -49,7 +56,7 @@ export default function ProposalDrawer() {
       setSubmitting(true);
       console.log("Proposta enviada:", data);
       setOpen(false);
-      (form as any).reset();
+      form.reset(); // ✅ válido em HTMLFormElement
       alert("Solicitação enviada com sucesso! Em breve entraremos em contacto.");
     } finally {
       setSubmitting(false);
@@ -60,7 +67,6 @@ export default function ProposalDrawer() {
     <AnimatePresence>
       {open && (
         <>
-          {/* Backdrop */}
           <motion.div
             className="fixed inset-0 z-[80] bg-black/40"
             initial={{ opacity: 0 }}
@@ -68,7 +74,6 @@ export default function ProposalDrawer() {
             exit={{ opacity: 0 }}
             onClick={() => setOpen(false)}
           />
-          {/* Drawer */}
           <motion.aside
             role="dialog"
             aria-modal="true"
@@ -78,20 +83,17 @@ export default function ProposalDrawer() {
             exit={{ x: "100%" }}
             transition={{ type: "tween", duration: 0.28 }}
           >
-            {/* Header */}
             <div className="px-6 py-4 border-b border-black/10">
               <div className="flex items-center gap-3">
                 <ShieldCheck className="text-brand-primary" size={20} />
                 <h2 className="font-heading text-xl text-brand-primary">Solicitação de Proposta</h2>
               </div>
-              {/* faixa curta decorativa */}
               <div className="mt-3 h-1.5 w-28 bg-gold-gradient" />
               <p className="mt-3 text-sm text-black/70 leading-relaxed">
                 Preencha os dados abaixo e nossa equipa entrará em contacto para preparar uma proposta sob medida.
               </p>
             </div>
 
-            {/* Form */}
             <form
               className="p-6 overflow-y-auto"
               onSubmit={(e) => {
@@ -99,7 +101,6 @@ export default function ProposalDrawer() {
                 onSubmit(e.currentTarget);
               }}
             >
-              {/* Bloco: Identificação */}
               <SectionTitle>Identificação</SectionTitle>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
                 <Field icon={User} label="Nome completo" name="nome" required placeholder="Seu nome" />
@@ -108,14 +109,12 @@ export default function ProposalDrawer() {
                 <Field icon={BriefcaseBusiness} label="Actividade comercial" name="actividade" placeholder="Ex.: Oil & Gas" />
               </div>
 
-              {/* Bloco: Contacto */}
               <SectionTitle>Contacto</SectionTitle>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
                 <Field icon={Mail} label="E-mail" name="email" type="email" required placeholder="voce@empresa.com" />
                 <Field icon={Phone} label="Contacto" name="contacto" type="tel" required placeholder="+244 ..." />
               </div>
 
-              {/* Bloco: Detalhes do Serviço */}
               <SectionTitle>Detalhes do serviço</SectionTitle>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
                 <SelectField
@@ -123,7 +122,6 @@ export default function ProposalDrawer() {
                   label="Serviço que pretende"
                   name="servico"
                   placeholder="— selecione —"
-                  required={false}
                   options={SERVICOS}
                 />
                 <SelectField
@@ -131,10 +129,10 @@ export default function ProposalDrawer() {
                   label="Tempo"
                   name="tempo"
                   placeholder="— selecione —"
-                  required
                   options={["12h", "24h", "48h"]}
+                  required
                 />
-                <Field icon={Home} label="Quantos postos (residência)" name="postos" type="number" min="0" placeholder="0" />
+                <Field icon={Home} label="Quantos postos (residência)" name="postos" type="number" min={0} placeholder="0" />
                 <Field icon={BriefcaseBusiness} label="Categoria" name="categoria" placeholder="Ex.: Vigilante, Supervisor..." />
               </div>
 
@@ -145,13 +143,8 @@ export default function ProposalDrawer() {
                 placeholder="Especifique necessidades, locais, horários, SLAs, etc."
               />
 
-              {/* Ações */}
               <div className="mt-6 flex flex-col sm:flex-row gap-3">
-                <button
-                  type="submit"
-                  disabled={submitting}
-                  className="btn btn-primary w-full sm:w-auto disabled:opacity-70"
-                >
+                <button type="submit" disabled={submitting} className="btn btn-primary w-full sm:w-auto disabled:opacity-70">
                   {submitting ? "Enviando..." : "Enviar solicitação"}
                 </button>
                 <button
@@ -170,7 +163,7 @@ export default function ProposalDrawer() {
   );
 }
 
-/* ====== Componentes de UI (cantos retos) ====== */
+/* ====== UI ====== */
 
 function SectionTitle({ children }: { children: React.ReactNode }) {
   return <h3 className="text-[13px] uppercase tracking-wide text-black/60 mb-3">{children}</h3>;
@@ -198,7 +191,7 @@ function Field({
   name: string;
   type?: string;
   required?: boolean;
-  min?: string | number;
+  min?: number;
   placeholder?: string;
 }) {
   return (
@@ -215,7 +208,7 @@ function Field({
           id={name}
           name={name}
           type={type}
-          min={min as any}
+          min={min}
           required={required}
           placeholder={placeholder}
           className="w-full h-11 pl-11 pr-3 border border-black/20 outline-none

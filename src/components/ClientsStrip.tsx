@@ -1,6 +1,8 @@
 // src/components/ClientsStrip.tsx
 "use client";
 
+import Image from "next/image";
+
 type Client = { name: string; logo: string; href?: string };
 
 const CLIENTS: Client[] = [
@@ -13,36 +15,29 @@ const CLIENTS: Client[] = [
 ];
 
 export default function ClientsStrip() {
-  // duplicamos para criar loop perfeito
   const LOOP = [...CLIENTS, ...CLIENTS];
 
   return (
     <section className="relative">
-      {/* BG base + pattern */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute inset-0 bg-brand-primary" />
         <div
           className="absolute inset-0 bg-center bg-repeat"
-          style={{ backgroundImage: "url('/background-clients.pn')" }}
+          style={{ backgroundImage: "url('/background-clients.png')" }} // <- fix .png
         />
       </div>
 
       <div className="container-xl py-8 md:py-10">
-        {/* marquee */}
         <div
           className="group overflow-hidden"
           style={{
-            // fade nas bordas
             maskImage:
               "linear-gradient(to right, transparent, black 8%, black 92%, transparent)",
             WebkitMaskImage:
               "linear-gradient(to right, transparent, black 8%, black 92%, transparent)",
           }}
         >
-          <div
-            className="flex items-center gap-12 md:gap-16 animate-logo-marquee
-                       group-hover:[animation-play-state:paused]"
-          >
+          <div className="flex items-center gap-12 md:gap-16 animate-logo-marquee group-hover:[animation-play-state:paused]">
             {LOOP.map((c, i) => (
               <a
                 key={i}
@@ -51,10 +46,14 @@ export default function ClientsStrip() {
                 aria-label={c.name}
                 title={c.name}
               >
-                <img
+                <Image
                   src={c.logo}
                   alt={c.name}
+                  width={160}
+                  height={48}
                   className="h-10 md:h-12 w-auto object-contain"
+                  sizes="(min-width: 768px) 160px, 120px"
+                  priority={i < 4}
                 />
               </a>
             ))}

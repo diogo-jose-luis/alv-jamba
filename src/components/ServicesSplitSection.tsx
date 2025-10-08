@@ -13,13 +13,15 @@ import {
   UserCheck,
   ShieldPlus,
   ArrowRight,
+  type LucideIcon, // 👈 importe o tipo
 } from "lucide-react";
 
 type Item = {
   title: string;
   desc: string;
-  icon: React.ComponentType<{ size?: number }>;
+  icon: LucideIcon; // 👈 agora aceita className, size, strokeWidth, etc.
 };
+
 
 const LEFT: Item[] = [
   {
@@ -84,7 +86,7 @@ function Feature({
 }: {
   title: string;
   desc: string;
-  Icon: Item["icon"];
+  Icon: LucideIcon; // 👈 idem aqui
 }) {
   return (
     <div className="group flex items-start gap-4">
