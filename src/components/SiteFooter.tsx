@@ -54,7 +54,7 @@ export default function SiteFooter() {
             <ul className="space-y-2">
               {LINKS.map((l, i) => (
                 <li key={i}>
-                  <a href={l.href} className="inline-block py-1 text-white/85 hover:text-brand-secondary">
+                  <a href="#" className="inline-block py-1 text-white/85 hover:text-brand-secondary">
                     » {l.label}
                   </a>
                 </li>
@@ -68,7 +68,7 @@ export default function SiteFooter() {
             <ul className="divide-y divide-white/10">
               {UPDATES.map((u, i) => (
                 <li key={i} className="py-3">
-                  <a href={u.href} className="text-white/85 hover:text-brand-secondary">
+                  <a href="#" className="text-white/85 hover:text-brand-secondary">
                     {u.label}
                   </a>
                   <div className="mt-1 text-xs text-white/60">Leia no nosso blog</div>
@@ -132,8 +132,8 @@ export default function SiteFooter() {
         <div className="container-xl h-12 flex flex-col md:flex-row items-center justify-between gap-2 text-sm">
           <div>© {new Date().getFullYear()} ALVJAMBA Segurança. Todos os direitos reservados.</div>
           <div className="flex items-center gap-4">
-            <a href="/privacidade" className="hover:text-brand-secondary">Política de Privacidade</a>
-            <a href="/termos" className="hover:text-brand-secondary">Termos & Condições</a>
+            <a href="#" className="hover:text-brand-secondary">Política de Privacidade</a>
+            <a href="#" className="hover:text-brand-secondary">Termos & Condições</a>
           </div>
         </div>
       </div>
