@@ -32,11 +32,15 @@ body {
 
 
 /* Container padrão */
-.container-xl { @apply max-w-container mx-auto px-4; }
+.container-xl { @apply max-w-container mx-auto px-4; } 
 
 @keyframes logo-marquee {
   from { transform: translateX(0); }
   to   { transform: translateX(-50%); } /* metade porque duplicamos os itens */
+}
+
+@keyframes shine {
+  to { transform: translateX(240%) skewX(-18deg); opacity: 0; }
 }
 
 /* Utilitário da animação (30s contínuos, linear, infinito) */
