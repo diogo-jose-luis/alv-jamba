@@ -23,8 +23,8 @@ export default function ProcessoPage() {
         <PageHero
           title="Processo de Seleção"
           subtitle="Rigor, transparência e foco no mérito."
-          image="/hero/slide3.png"
-          objectPosition="center 35%"
+          image="/hero/about.png"
+           objectPosition="center 20%"
           className="h-[40vh] md:h-[46vh]"
         />
         <SelectionProcess />

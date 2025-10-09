@@ -7,6 +7,8 @@ import PageHero from "@/components/PageHero";
 import AboutCompanySection from "@/components/AboutCompanySection";
 import MissionVisionValues from "@/components/MissionVisionValues";
 import ClientsStrip from "@/components/ClientsStrip";
+import PolicyPrinciples from "@/components/PolicyPrinciples";
+import ClientsMarquee from "@/components/ClientsMarquee";
 
 export const metadata = {
   title: "Quem somos — ALVJAMBA",
@@ -28,11 +30,13 @@ export default function QuemSomosPage() {
           objectPosition="center top" // mantém o topo visível
         />
 
-       <AboutCompanySection videoId="SEU_VIDEO_ID" />
+       <AboutCompanySection videoId="7O6MZep__2I" />
 
        <MissionVisionValues />
 
-       <ClientsStrip />
+       <PolicyPrinciples />
+
+       <ClientsMarquee />
 
       </main>
 

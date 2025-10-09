@@ -71,7 +71,7 @@ function PostCard({ title, date, author, excerpt, image, href = "#" }: Post) {
 
       {/* título + excerto */}
       <h3 className="mt-3 font-heading text-xl font-extrabold text-brand-ink group-hover:text-brand-primary transition-colors">
-        <a href={href}>{title.toUpperCase()}</a>
+        <a href="#">{title.toUpperCase()}</a>
       </h3>
       <p className="mt-2 text-black/70 leading-relaxed line-clamp-3">
         {excerpt}
@@ -79,7 +79,7 @@ function PostCard({ title, date, author, excerpt, image, href = "#" }: Post) {
 
       {/* ler mais */}
       <a
-        href={href}
+        href="#"
         className="mt-3 inline-flex items-center gap-2 font-semibold text-brand-primary hover:text-brand-ink"
       >
         Ler mais <ArrowRight size={16} />

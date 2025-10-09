@@ -25,7 +25,7 @@ export default function ContactosPage() {
           subtitle="Trabalhamos 24/24H, garantindo o contacto a todo tempo
 através de sistemas integrado de gestão de corrências, controlo
 de acessos e rádio de comunicação."
-          image="/hero/slide1.png"
+          image="/hero/slide7.png"
           objectPosition="center 35%"
         />
         <ContactMapBand />

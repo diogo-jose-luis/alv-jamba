@@ -13,31 +13,31 @@ type Service = {
 };
 
 const SERVICES: Service[] = [
-  { title: "Segurança Física", slug: "seguranca-fisica", image: "/services/service.png",
+  { title: "Segurança Física", slug: "seguranca-fisica", image: "/services/s1.png",
     excerpt: "Proteção presencial de pessoas e património com rondas, controlo de acesso e procedimentos claros." },
-  { title: "Segurança Marítima / Offshore", slug: "seguranca-maritima-offshore", image: "/services/service.png",
+  { title: "Segurança Marítima / Offshore", slug: "seguranca-maritima-offshore", image: "/services/s2.png",
     excerpt: "Equipas treinadas para plataformas e operações costeiras, com protocolos de emergência e QHSE." },
-  { title: "Segurança Onshore", slug: "seguranca-onshore", image: "/services/service.png",
+  { title: "Segurança Onshore", slug: "seguranca-onshore", image: "/services/s3.png",
     excerpt: "Planos táticos para instalações industriais, minas e logística, integrando segurança eletrónica." },
-  { title: "Segurança Eletrónica", slug: "seguranca-eletronica", image: "/services/service.png",
+  { title: "Segurança Eletrónica", slug: "seguranca-eletronica", image: "/services/s4.png",
     excerpt: "CCTV, alarmes, controlo de acesso e monitorização 24/7 via SOC para resposta célere." },
-  { title: "Assistente de Porto e Aeroporto", slug: "assistente-porto-aeroporto", image: "/services/service.png",
+  { title: "Assistente de Porto e Aeroporto", slug: "assistente-porto-aeroporto", image: "/services/s5.png",
     excerpt: "Apoio VIP/Corporativo, coordenação de embarque/desembarque e escolta dentro do perímetro." },
-  { title: "Escolta de Mercadorias e Valores", slug: "escolta-de-mercadorias-e-valores", image: "/services/service.png",
+  { title: "Escolta de Mercadorias e Valores", slug: "escolta-de-mercadorias-e-valores", image: "/services/s6.png",
     excerpt: "Planeamento de rotas, análise de risco e acompanhamento permanente por equipas dedicadas." },
-  { title: "Vigilância Marítima", slug: "vigilancia-maritima", image: "/services/service.png",
+  { title: "Vigilância Marítima", slug: "vigilancia-maritima", image: "/services/s7.png",
     excerpt: "Supervisão de cais, terminais e embarcações com integração de sensores e patrulhas." },
-  { title: "QRF — Força de Reação Armada", slug: "qrf-forca-de-reacao", image: "/services/service.png",
+  { title: "QRF — Força de Reação Armada", slug: "qrf-forca-de-reacao", image: "/services/s8.png",
     excerpt: "Unidades de resposta rápida para incidentes críticos e reforço tático em campo." },
-  { title: "CIT — Transporte de Valores", slug: "cit-transporte-de-valores", image: "/services/service.png",
+  { title: "CIT — Transporte de Valores", slug: "cit-transporte-de-valores", image: "/services/s9.png",
     excerpt: "Procedimentos seguros de recolha, transferência e entrega com rastreabilidade total." },
-  { title: "Serviço de Escolta", slug: "servico-de-escolta", image: "/services/service.png",
+  { title: "Serviço de Escolta", slug: "servico-de-escolta", image: "/services/s10.png",
     excerpt: "Viaturas de apoio e agentes credenciados para comboios estratégicos e eventos." },
-  { title: "Serviços de Motoristas", slug: "servicos-de-motoristas", image: "/services/service.png",
+  { title: "Serviços de Motoristas", slug: "servicos-de-motoristas", image: "/services/s11.png",
     excerpt: "Condutores treinados em condução defensiva, rotas discretas e protocolo executivo." },
-  { title: "Segurança Contra Incêndios", slug: "seguranca-contra-incendios", image: "/services/service.png",
+  { title: "Segurança Contra Incêndios", slug: "seguranca-contra-incendios", image: "/services/s12.png",
     excerpt: "Brigadas, planos de evacuação e inspeções para conformidade e prevenção ativa." },
-  { title: "Recepcionistas", slug: "recepcionistas", image: "/services/service.png",
+  { title: "Recepcionistas", slug: "recepcionistas", image: "/services/s13.png",
     excerpt: "Primeira linha de atendimento com disciplina, triagem e controlo de acessos." },
 ];
 
@@ -106,7 +106,7 @@ export default function ServicesMosaic() {
                 <p className="mt-2 text-black/70 leading-relaxed">{s.excerpt}</p>
 
                 <div className="mt-5">
-                  <Link href={`/servicos/${s.slug}`} className="inline-flex items-center gap-2 btn btn-outline">
+                  <Link href="#" className="inline-flex items-center gap-2 btn btn-outline">
                     Saber mais <ArrowRight size={16} />
                   </Link>
                 </div>

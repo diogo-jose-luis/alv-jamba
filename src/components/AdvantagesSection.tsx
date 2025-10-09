@@ -69,10 +69,10 @@ function AdvantageCard({ title, desc, image, icon: Icon, href = "#" }: Card) {
         <p className="mt-3 text-white/85 max-w-[46ch]">{desc}</p>
 
         <a
-          href={href}
+          href="#"
           className="mt-5 inline-flex items-center gap-2 font-semibold text-brand-secondary hover:text-white transition-colors"
         >
-          READ MORE
+          Ler mais
           <ArrowRight size={16} />
         </a>
       </div>

@@ -23,7 +23,7 @@ export default function ClientsStrip() {
         <div className="absolute inset-0 bg-brand-primary" />
         <div
           className="absolute inset-0 bg-center bg-repeat"
-          style={{ backgroundImage: "url('/background-clients.png')" }} // <- fix .png
+          style={{ backgroundImage: "url('/background-cliens.png')" }} // <- fix .png
         />
       </div>
 

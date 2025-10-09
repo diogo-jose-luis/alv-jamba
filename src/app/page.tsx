@@ -12,6 +12,7 @@ import CtaBand from "@/components/CtaBand";
 import NewsSection from "@/components/NewsSection";
 import ClientsStrip from "@/components/ClientsStrip";
 import SiteFooter from "@/components/SiteFooter";
+import ClientsMarquee from "@/components/ClientsMarquee";
 
 export default function Home() {
   return (
@@ -27,7 +28,7 @@ export default function Home() {
         <WhyChooseUsSection  />
         <CtaBand />
         <NewsSection />
-        <ClientsStrip />
+        <ClientsMarquee />
         <SiteFooter />
       </main>
       <ProposalDrawer />

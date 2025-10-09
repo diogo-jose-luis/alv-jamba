@@ -1,8 +1,9 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { Hourglass, Lightbulb, Anchor } from "lucide-react";
+import { Hourglass, Lightbulb, Anchor, ArrowRight } from "lucide-react";
 
 /* ------------ helpers ------------ */
 function useInView<T extends HTMLElement>(options?: IntersectionObserverInit) {
@@ -38,7 +39,7 @@ function Counter({
     const t0 = performance.now();
     const step = (t: number) => {
       const p = Math.min(1, (t - t0) / duration);
-      setVal(Math.round(to * (1 - Math.pow(1 - p, 2)))); // easeOutQuad
+      setVal(Math.round(to * (1 - Math.pow(1 - p, 2))));
       if (p < 1) raf = requestAnimationFrame(step);
     };
     raf = requestAnimationFrame(step);
@@ -132,63 +133,34 @@ export default function WhyChooseUsSection() {
           />
 
           {/* Painel 2x2 sobre a imagem */}
-          {/* Painel 2x2 sobre a imagem */}
           <div className="absolute inset-0 flex items-center justify-center p-4">
             <div className="grid grid-cols-2 w-full max-w-[640px]">
-              {/* 1 - translúcida */}
-              <div
-                className="p-8 flex flex-col items-center justify-center
-                    bg-[#520b29]/45 text-white backdrop-blur-[2px]"
-              >
-                <Counter
-                  to={3500}
-                  start={inView}
-                  className="font-heading text-4xl md:text-5xl font-extrabold"
-                />
+              <div className="p-8 flex flex-col items-center justify-center bg-[#520b29]/45 text-white backdrop-blur-[2px]">
+                <Counter to={3500} start={inView} className="font-heading text-4xl md:text-5xl font-extrabold" />
                 <div className="mt-2 text-white/90">Total de Guardas</div>
               </div>
-
-              {/* 2 - sólida */}
-              <div
-                className="p-8 flex flex-col items-center justify-center
-                    bg-brand-primary text-white"
-              >
-                <Counter
-                  to={2340}
-                  start={inView}
-                  className="font-heading text-4xl md:text-5xl font-extrabold"
-                />
+              <div className="p-8 flex flex-col items-center justify-center bg-brand-primary text-white">
+                <Counter to={2340} start={inView} className="font-heading text-4xl md:text-5xl font-extrabold" />
                 <div className="mt-2 text-white/90">Clientes Satisfeitos</div>
               </div>
-
-              {/* 3 - sólida */}
-              <div
-                className="p-8 flex flex-col items-center justify-center
-                    bg-brand-primary text-white"
-              >
-                <Counter
-                  to={38}
-                  start={inView}
-                  className="font-heading text-4xl md:text-5xl font-extrabold"
-                />
+              <div className="p-8 flex flex-col items-center justify-center bg-brand-primary text-white">
+                <Counter to={38} start={inView} className="font-heading text-4xl md:text-5xl font-extrabold" />
                 <div className="mt-2 text-white/90">Prémios</div>
               </div>
-
-              {/* 4 - translúcida */}
-              <div
-                className="p-8 flex flex-col items-center justify-center
-                    bg-[#520b29]/45 text-white backdrop-blur-[2px]"
-              >
-                <Counter
-                  to={35}
-                  start={inView}
-                  className="font-heading text-4xl md:text-5xl font-extrabold"
-                />
+              <div className="p-8 flex flex-col items-center justify-center bg-[#520b29]/45 text-white backdrop-blur-[2px]">
+                <Counter to={35} start={inView} className="font-heading text-4xl md:text-5xl font-extrabold" />
                 <div className="mt-2 text-white/90">Sucursais</div>
               </div>
             </div>
           </div>
         </div>
+      </div>
+
+      {/* CTA para Quem Somos */}
+      <div className="container-xl mt-10 md:mt-12 text-center">
+        <Link href="/quem-somos" className="inline-flex items-center gap-2 btn btn-primary">
+          Conheça a nossa história <ArrowRight size={16} />
+        </Link>
       </div>
     </section>
   );
