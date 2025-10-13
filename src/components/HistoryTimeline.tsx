@@ -1,26 +1,12 @@
 "use client";
 
-import { motion, type Variants } from "framer-motion";
 import { CalendarClock } from "lucide-react";
 import clsx from "clsx";
+import React from "react";
 
 type Item = {
   year: string;
   content: React.ReactNode;
-};
-
-const container: Variants = {
-  hidden: { opacity: 0, y: 18 },
-  show: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1], staggerChildren: 0.1 },
-  },
-};
-
-const itemVar: Variants = {
-  hidden: { opacity: 0, y: 22 },
-  show:   { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] } },
 };
 
 const DATA: Item[] = [
@@ -38,24 +24,8 @@ const DATA: Item[] = [
       </>
     ),
   },
-  {
-    year: "2013",
-    content: (
-      <>
-        Abertura do contrato com a <strong>NDAD</strong> (armazéns de distribuição
-        alimentar) em <strong>Luanda, Lubango e Namibe</strong>.
-      </>
-    ),
-  },
-  {
-    year: "2014",
-    content: (
-      <>
-        Abertura do contrato com a <strong>ODEBRECHT</strong> em <strong>Luanda, Sumbe e
-        Benguela</strong>.
-      </>
-    ),
-  },
+  { year: "2013", content: <>Abertura do contrato com a <strong>NDAD</strong> (armazéns de distribuição alimentar) em <strong>Luanda, Lubango e Namibe</strong>.</> },
+  { year: "2014", content: <>Abertura do contrato com a <strong>ODEBRECHT</strong> em <strong>Luanda, Sumbe e Benguela</strong>.</> },
   {
     year: "2015",
     content: (
@@ -66,64 +36,13 @@ const DATA: Item[] = [
       </>
     ),
   },
-  {
-    year: "2016",
-    content: (
-      <>
-        A <strong>ENDE</strong> adjudica o contrato de proteção de ativos físicos e materiais
-        em <strong>Lunda-Sul (Saurimo), Malange, Sumbe, Lubango e Cunene</strong>.
-      </>
-    ),
-  },
-  {
-    year: "2017",
-    content: (
-      <>Criação de equipas para gestão de <strong>segurança eletrónica</strong>.</>
-    ),
-  },
-  {
-    year: "2018",
-    content: (
-      <>
-        A <strong>PREZIOSO-ALTRAD</strong> adjudica contrato de proteção de ativos físicos e
-        materiais.
-      </>
-    ),
-  },
-  {
-    year: "2019",
-    content: (
-      <>
-        Criação de <strong>porteiros</strong> para proteção de condomínios e proteção de
-        ativos fixos e materiais.
-      </>
-    ),
-  },
-  {
-    year: "2020",
-    content: (
-      <>
-        Adjudicação do contrato da <strong>Fábrica DARLING VIDA CABELOS</strong>.
-      </>
-    ),
-  },
-  {
-    year: "2021",
-    content: (
-      <>
-        Adjudicação do contrato da <strong>INTEROIL</strong> para proteção de ativos físicos e
-        materiais.
-      </>
-    ),
-  },
-  {
-    year: "2022",
-    content: (
-      <>
-        Abertura do contrato de prestação de serviços com o <strong>RESORT MUPAS</strong>.
-      </>
-    ),
-  },
+  { year: "2016", content: <>A <strong>ENDE</strong> adjudica o contrato de proteção de ativos físicos e materiais em <strong>Lunda-Sul (Saurimo), Malange, Sumbe, Lubango e Cunene</strong>.</> },
+  { year: "2017", content: <>Criação de equipas para gestão de <strong>segurança eletrónica</strong>.</> },
+  { year: "2018", content: <>A <strong>PREZIOSO-ALTRAD</strong> adjudica contrato de proteção de ativos físicos e materiais.</> },
+  { year: "2019", content: <>Criação de <strong>porteiros</strong> para proteção de condomínios e ativos fixos e materiais.</> },
+  { year: "2020", content: <>Adjudicação do contrato da <strong>Fábrica DARLING VIDA CABELOS</strong>.</> },
+  { year: "2021", content: <>Adjudicação do contrato da <strong>INTEROIL</strong> para proteção de ativos físicos e materiais.</> },
+  { year: "2022", content: <>Abertura do contrato de prestação de serviços com o <strong>RESORT MUPAS</strong>.</> },
   {
     year: "2023",
     content: (
@@ -140,7 +59,7 @@ const DATA: Item[] = [
 export default function HistoryTimeline() {
   return (
     <section className="relative py-14 md:py-20">
-      {/* leve textura de fundo para dar profundidade */}
+      {/* textura de fundo */}
       <div
         className="absolute inset-0 -z-10 opacity-[0.035] bg-center bg-no-repeat bg-contain"
         style={{ backgroundImage: "url('/dotted-map.png')" }}
@@ -158,23 +77,16 @@ export default function HistoryTimeline() {
           <div className="mx-auto mt-4 h-1.5 w-24 bg-brand-secondary" />
         </div>
 
-        {/* Linha do tempo */}
-        <motion.ol
-          variants={container}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, amount: 0.25 }}
-          className="relative border-l border-black/10 pl-6 md:pl-0 md:border-none"
-        >
+        {/* Linha do tempo (estática, sem animações) */}
+        <ol className="relative border-l border-black/10 pl-6 md:pl-0 md:border-none">
           {/* eixo central (desktop) */}
           <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-px bg-black/10" />
 
           {DATA.map((entry, i) => {
             const isLeft = i % 2 === 0;
             return (
-              <motion.li
+              <li
                 key={i}
-                variants={itemVar}
                 className={clsx(
                   "relative mb-10 md:mb-14",
                   "md:flex md:items-stretch md:gap-10"
@@ -187,8 +99,7 @@ export default function HistoryTimeline() {
                     isLeft ? "md:pr-10 md:order-1" : "md:pl-10 md:order-2"
                   )}
                 >
-                  <div className="group bg-white border border-black/10 p-5 md:p-6 shadow-sm transition
-                                   hover:shadow-lg hover:-translate-y-0.5">
+                  <div className="group bg-white border border-black/10 p-5 md:p-6 shadow-sm transition hover:shadow-lg hover:-translate-y-0.5">
                     <div className="flex items-center gap-2 mb-3">
                       <div className="w-9 h-9 grid place-content-center border-2 border-brand-secondary">
                         <CalendarClock size={18} className="text-brand-secondary" />
@@ -212,11 +123,16 @@ export default function HistoryTimeline() {
                 </div>
 
                 {/* Coluna oposta vazia para manter alternância */}
-                <div className={clsx("hidden md:block md:w-1/2", isLeft ? "md:order-3" : "md:order-1")} />
-              </motion.li>
+                <div
+                  className={clsx(
+                    "hidden md:block md:w-1/2",
+                    isLeft ? "md:order-3" : "md:order-1"
+                  )}
+                />
+              </li>
             );
           })}
-        </motion.ol>
+        </ol>
       </div>
     </section>
   );

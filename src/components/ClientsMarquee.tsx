@@ -4,12 +4,10 @@
 import Image from "next/image";
 import type { CSSProperties } from "react";
 
-type Logo = { src: string; alt: string; width?: number; height?: number };
-
-// ✅ tipo auxiliar para CSS custom properties
+type Logo = { src: string; alt: string };
 type MarqueeVars = CSSProperties & {
-  "--speed"?: string;
-  "--dir"?: string;
+  "--speed"?: string; // ex.: "30s"
+  "--gap"?: string;   // ex.: "40px"
 };
 
 const LOGOS: Logo[] = [
@@ -25,57 +23,37 @@ const LOGOS: Logo[] = [
   { src: "/clients/prezioso.jpg", alt: "PREZIOSO ALTRAD" },
 ];
 
-// um “tile” de logo com estilo consistente
+// Tile consistente com logos MAIORES
 function LogoTile({ l }: { l: Logo }) {
   return (
-    <div className="mx-6 flex items-center opacity-80 hover:opacity-100 transition-opacity">
-      <div className="relative h-10 md:h-12 w-auto grayscale hover:grayscale-0 transition-[filter]">
+    <div className="flex items-center">
+      <div className="relative h-16 md:h-20 w-auto grayscale hover:grayscale-0 transition-[filter] opacity-85 hover:opacity-100">
         <Image
           src={l.src}
           alt={l.alt}
-          width={220}
-          height={80}
+          width={340}
+          height={140}
           className="h-full w-auto object-contain"
-          sizes="(min-width: 1024px) 220px, 160px"
+          sizes="(min-width: 1024px) 300px, 220px"
+          priority={false}
         />
       </div>
     </div>
   );
 }
 
-function Row({
-  items,
-  reverse = false,
-  speed = 32,
-}: {
-  items: Logo[];
-  reverse?: boolean;
-  speed?: number;
-}) {
-  // ✅ sem any
-  const vars: MarqueeVars = {
-    "--speed": `${speed}s`,
-    "--dir": reverse ? "-1" : "1",
-  };
-  return (
-    <div className="marquee-row" style={vars}>
-      <div className="marquee">
-        {items.map((l, i) => (
-          <LogoTile key={`a-${i}-${l.src}`} l={l} />
-        ))}
-      </div>
-      <div className="marquee">
-        {items.map((l, i) => (
-          <LogoTile key={`b-${i}-${l.src}`} l={l} />
-        ))}
-      </div>
-    </div>
-  );
-}
-
 export default function ClientsMarquee() {
+  // Velocidade e gap facilmente ajustáveis
+  const vars: MarqueeVars = {
+    "--speed": "36s",
+    "--gap": "44px",
+  };
+
+  // Duplicamos a lista na MESMA <ul> para loop perfeito
+  const items = [...LOGOS, ...LOGOS];
+
   return (
-    <section className="relative py-10 md:py-14 bg-white">
+    <section className="relative py-12 md:py-16 bg-white">
       {/* máscara sutil nas bordas para fade */}
       <div
         className="absolute inset-0 pointer-events-none"
@@ -99,46 +77,55 @@ export default function ClientsMarquee() {
         </div>
       </div>
 
-      {/* wrapper pausa no hover */}
-      <div className="group/rail select-none">
-        <Row items={LOGOS} speed={36} />
-        <Row items={LOGOS.slice().reverse()} reverse speed={40} />
+      {/* SCROLLER */}
+      <div className="scroller group/rail" style={vars}>
+        <ul className="track">
+          {items.map((l, i) => (
+            <li key={`${l.src}-${i}`} className="tile">
+              <LogoTile l={l} />
+            </li>
+          ))}
+        </ul>
       </div>
 
-      {/* estilos da animação */}
+      {/* estilos */}
       <style jsx global>{`
-        .marquee-row {
-          display: flex;
+        .scroller {
           overflow: hidden;
           position: relative;
-          white-space: nowrap;
+          user-select: none;
         }
-        .marquee {
-          display: inline-flex;
+
+        /* A faixa é do tamanho do conteúdo (max-content) e vem DUPLICADA na mesma <ul> */
+        .track {
+          display: flex;
           align-items: center;
+          gap: var(--gap, 40px);
+          width: max-content; /* evita quebra de linha */
+          min-width: 100%;    /* garante preenchimento */
+          animation: scroll var(--speed, 36s) linear infinite;
           will-change: transform;
-          animation: marquee var(--speed, 30s) linear infinite;
-          animation-direction: normal;
-          transform: translateZ(0);
         }
-        /* direção controlada por --dir (1 = esquerda, -1 = direita) */
-        .marquee-row .marquee {
-          animation-direction: normal;
+
+        .tile {
+          list-style: none;
+          flex: 0 0 auto; /* não encolher */
         }
-        .marquee-row[style*="--dir: -1"] .marquee {
-          animation-direction: reverse;
-        }
-        /* pausa elegante no hover da section */
-        .group\\/rail:hover .marquee {
+
+        /* Pausa no hover */
+        .group\\/rail:hover .track {
           animation-play-state: paused;
         }
-        @keyframes marquee {
-          0% {
-            transform: translateX(0);
-          }
-          100% {
-            transform: translateX(-50%);
-          }
+
+        /* Loop perfeito: com a lista duplicada, -50% equivale a 1 vez o conteúdo */
+        @keyframes scroll {
+          0%   { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+
+        /* Acessibilidade */
+        @media (prefers-reduced-motion: reduce) {
+          .track { animation: none !important; transform: none !important; }
         }
       `}</style>
     </section>

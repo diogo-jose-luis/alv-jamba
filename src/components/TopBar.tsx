@@ -13,7 +13,7 @@ export default function TopBar() {
         <div className="flex items-center gap-6">
           <a href="#" className="hover:text-white">FAQ’s</a>
           <a href="#" className="hover:text-white">Suporte</a>
-          {/* <a href="#" className="hover:text-white">PT / EN</a> */}
+          <a href="#" className="hover:text-white">PT / EN</a>
         </div>
       </div>
     </div>

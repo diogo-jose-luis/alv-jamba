@@ -3,8 +3,18 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  Building2, IdCard, User, Mail, Phone, BriefcaseBusiness,
-  Layers3, Home, Clock8, ShieldCheck, ChevronDown
+  Building2,
+  IdCard,
+  User,
+  Mail,
+  Phone,
+  BriefcaseBusiness,
+  Layers3,
+  Home,
+  Clock8,
+  ShieldCheck,
+  ChevronDown,
+  MapPin,
 } from "lucide-react";
 
 // Tipar o evento customizado
@@ -30,6 +40,27 @@ const SERVICOS = [
   "Recepcionistas",
 ];
 
+const PROVINCIAS = [
+  "Bengo",
+  "Benguela",
+  "Bié",
+  "Cabinda",
+  "Cuando Cubango",
+  "Cuanza Norte",
+  "Cuanza Sul",
+  "Cunene",
+  "Huambo",
+  "Huíla",
+  "Luanda",
+  "Lunda Norte",
+  "Lunda Sul",
+  "Malanje",
+  "Moxico",
+  "Namibe",
+  "Uíge",
+  "Zaire",
+] as const;
+
 export default function ProposalDrawer() {
   const [open, setOpen] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -37,7 +68,8 @@ export default function ProposalDrawer() {
   useEffect(() => {
     const openHandler = () => setOpen(true);
     window.addEventListener("open-proposal", openHandler as EventListener);
-    return () => window.removeEventListener("open-proposal", openHandler as EventListener);
+    return () =>
+      window.removeEventListener("open-proposal", openHandler as EventListener);
   }, []);
 
   useEffect(() => {
@@ -57,7 +89,9 @@ export default function ProposalDrawer() {
       console.log("Proposta enviada:", data);
       setOpen(false);
       form.reset(); // ✅ válido em HTMLFormElement
-      alert("Solicitação enviada com sucesso! Em breve entraremos em contacto.");
+      alert(
+        "Solicitação enviada com sucesso! Em breve entraremos em contacto."
+      );
     } finally {
       setSubmitting(false);
     }
@@ -86,11 +120,14 @@ export default function ProposalDrawer() {
             <div className="px-6 py-4 border-b border-black/10">
               <div className="flex items-center gap-3">
                 <ShieldCheck className="text-brand-primary" size={20} />
-                <h2 className="font-heading text-xl text-brand-primary">Solicitação de Proposta</h2>
+                <h2 className="font-heading text-xl text-brand-primary">
+                  Solicitação de Proposta
+                </h2>
               </div>
               <div className="mt-3 h-1.5 w-28 bg-gold-gradient" />
               <p className="mt-3 text-sm text-black/70 leading-relaxed">
-                Preencha os dados abaixo e nossa equipa entrará em contacto para preparar uma proposta sob medida.
+                Preencha os dados abaixo e nossa equipa entrará em contacto para
+                preparar uma proposta sob medida.
               </p>
             </div>
 
@@ -103,16 +140,61 @@ export default function ProposalDrawer() {
             >
               <SectionTitle>Identificação</SectionTitle>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-                <Field icon={User} label="Nome completo" name="nome" required placeholder="Seu nome" />
-                <Field icon={Building2} label="Empresa" name="empresa" placeholder="Nome da empresa" />
-                <Field icon={IdCard} label="NIF" name="nif" placeholder="Número de contribuinte" />
-                <Field icon={BriefcaseBusiness} label="Actividade comercial" name="actividade" placeholder="Ex.: Oil & Gas" />
+                <Field
+                  icon={User}
+                  label="Nome completo"
+                  name="nome"
+                  required
+                  placeholder="Seu nome"
+                />
+                <Field
+                  icon={Building2}
+                  label="Empresa"
+                  name="empresa"
+                  placeholder="Nome da empresa"
+                />
+                <Field
+                  icon={IdCard}
+                  label="NIF"
+                  name="nif"
+                  placeholder="Número de contribuinte"
+                />
+                <Field
+                  icon={BriefcaseBusiness}
+                  label="Actividade comercial"
+                  name="actividade"
+                  placeholder="Ex.: Oil & Gas"
+                />
               </div>
 
               <SectionTitle>Contacto</SectionTitle>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-                <Field icon={Mail} label="E-mail" name="email" type="email" required placeholder="voce@empresa.com" />
-                <Field icon={Phone} label="Contacto" name="contacto" type="tel" required placeholder="+244 ..." />
+                <Field
+                  icon={Mail}
+                  label="E-mail"
+                  name="email"
+                  type="email"
+                  required
+                  placeholder="voce@empresa.com"
+                />
+                <Field
+                  icon={Phone}
+                  label="Contacto"
+                  name="contacto"
+                  type="tel"
+                  required
+                  placeholder="+244 ..."
+                />
+
+                {/* NOVO CAMPO */}
+                <SelectField
+                  icon={MapPin}
+                  label="Província"
+                  name="provincia"
+                  options={PROVINCIAS as unknown as string[]}
+                  placeholder="— selecione —"
+                  required
+                />
               </div>
 
               <SectionTitle>Detalhes do serviço</SectionTitle>
@@ -132,8 +214,20 @@ export default function ProposalDrawer() {
                   options={["12h", "24h", "48h"]}
                   required
                 />
-                <Field icon={Home} label="Quantos postos (residência)" name="postos" type="number" min={0} placeholder="0" />
-                <Field icon={BriefcaseBusiness} label="Categoria" name="categoria" placeholder="Ex.: Vigilante, Supervisor..." />
+                <Field
+                  icon={Home}
+                  label="Quantos postos (residência)"
+                  name="postos"
+                  type="number"
+                  min={0}
+                  placeholder="0"
+                />
+                <Field
+                  icon={BriefcaseBusiness}
+                  label="Categoria"
+                  name="categoria"
+                  placeholder="Ex.: Vigilante, Supervisor..."
+                />
               </div>
 
               <TextArea
@@ -144,7 +238,11 @@ export default function ProposalDrawer() {
               />
 
               <div className="mt-6 flex flex-col sm:flex-row gap-3">
-                <button type="submit" disabled={submitting} className="btn btn-primary w-full sm:w-auto disabled:opacity-70">
+                <button
+                  type="submit"
+                  disabled={submitting}
+                  className="btn btn-primary w-full sm:w-auto disabled:opacity-70"
+                >
                   {submitting ? "Enviando..." : "Enviar solicitação"}
                 </button>
                 <button
@@ -166,12 +264,25 @@ export default function ProposalDrawer() {
 /* ====== UI ====== */
 
 function SectionTitle({ children }: { children: React.ReactNode }) {
-  return <h3 className="text-[13px] uppercase tracking-wide text-black/60 mb-3">{children}</h3>;
+  return (
+    <h3 className="text-[13px] uppercase tracking-wide text-black/60 mb-3">
+      {children}
+    </h3>
+  );
 }
 
-function Label({ children, htmlFor }: { children: React.ReactNode; htmlFor: string }) {
+function Label({
+  children,
+  htmlFor,
+}: {
+  children: React.ReactNode;
+  htmlFor: string;
+}) {
   return (
-    <label className="text-sm font-semibold text-brand-ink mb-1 block" htmlFor={htmlFor}>
+    <label
+      className="text-sm font-semibold text-brand-ink mb-1 block"
+      htmlFor={htmlFor}
+    >
       {children}
     </label>
   );
@@ -262,7 +373,10 @@ function SelectField({
             </option>
           ))}
         </select>
-        <ChevronDown className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-black/40" size={16} />
+        <ChevronDown
+          className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-black/40"
+          size={16}
+        />
       </div>
     </div>
   );
