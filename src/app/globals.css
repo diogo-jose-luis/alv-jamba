@@ -48,3 +48,23 @@ body {
   animation: logo-marquee 30s linear infinite;
 }
 /* Scrollbar customizada */
+
+
+@layer base {
+  /* Conteúdo normal em Semibold */
+  body { @apply font-sans font-semibold; }
+
+  /* Títulos com a família de headings */
+  h1, h2, h3, h4, h5, h6 { @apply font-heading; }
+  h1 { @apply font-black; }          /* 900 (Black/Heavy). Se não tiveres Black, troca por font-extrabold */
+  h2 { @apply font-extrabold; }      /* 800 */
+  h3 { @apply font-bold; }           /* 700 */
+}
+
+/* Utilitários caso precises chamar pesos específicos em componentes */
+@layer utilities {
+  .heading-bold   { @apply font-heading font-bold; }
+  .heading-xbold  { @apply font-heading font-extrabold; }
+  .heading-black  { @apply font-heading font-black; } /* usa 900 se existir */
+}
+

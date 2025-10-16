@@ -50,8 +50,14 @@ function TipCard({
       <div className="p-6 md:p-7">
         <div className="flex items-center gap-3 mb-2">
           <div
-            className="w-12 h-12 grid place-content-center border-2 border-brand-secondary
-                       transition-colors group-hover:bg-brand-secondary"
+            className="
+    w-12 h-12 grid place-content-center
+    border-2 border-brand-secondary
+    text-brand-secondary
+    transition-colors
+    group-hover:bg-brand-secondary
+    group-hover:[&>svg]:!text-white
+  "
           >
             {icon}
           </div>

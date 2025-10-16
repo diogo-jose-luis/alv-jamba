@@ -96,7 +96,7 @@ export default function HeroSlider() {
                           transition: { duration: 1.1 },
                         },
                       }}
-                      className="font-heading text-3xl md:text-5xl text-white font-bold leading-tight drop-shadow"
+                      className="heading-black text-3xl md:text-5xl text-white leading-tight drop-shadow"
                     >
                       {s.title}
                     </motion.h1>
