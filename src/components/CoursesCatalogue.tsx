@@ -120,7 +120,7 @@ export default function CoursesCatalogue() {
 
         <div className="text-center mt-10">
           <Link href="/contactos" className="btn btn-primary">
-            Falar com a Formação
+            Falar com o Centro de Formação
           </Link>
         </div>
       </div>
