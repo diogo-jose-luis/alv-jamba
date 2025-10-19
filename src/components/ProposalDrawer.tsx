@@ -24,6 +24,9 @@ declare global {
   }
 }
 
+const API_BASE =
+  process.env.NEXT_PUBLIC_API_BASE?.replace(/\/$/, "") || "https://apsm.idsolucoes.ao/api";
+
 const SERVICOS = [
   "Segurança Física",
   "Segurança Marítima/Offshore",
@@ -38,7 +41,7 @@ const SERVICOS = [
   "Serviços de Motoristas",
   "Divisão de Segurança Contra Incêndios",
   "Recepcionistas",
-];
+] as const;
 
 const PROVINCIAS = [
   "Bengo",
@@ -61,9 +64,27 @@ const PROVINCIAS = [
   "Zaire",
 ] as const;
 
+type FormShape = {
+  nome?: string;
+  empresa?: string;
+  nif?: string;
+  actividade?: string;
+  email?: string;
+  contacto?: string;
+  provincia?: string;
+  servico?: string;
+  tempo?: string;
+  postos?: string | number;
+  categoria?: string;
+  mensagem?: string;
+};
+
+type ErrorBag = Record<string, string>;
+
 export default function ProposalDrawer() {
   const [open, setOpen] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [errors, setErrors] = useState<ErrorBag>({});
 
   useEffect(() => {
     const openHandler = () => setOpen(true);
@@ -78,24 +99,103 @@ export default function ProposalDrawer() {
     return () => window.removeEventListener("keydown", onKey);
   }, [open]);
 
-  async function onSubmit(form: HTMLFormElement) {
-    const data = Object.fromEntries(new FormData(form).entries());
-    if (!data.nome || !data.email || !data.contacto) {
-      alert("Por favor, preencha Nome, E-mail e Contacto.");
-      return;
+  function validate(payload: FormShape): ErrorBag {
+    const errs: ErrorBag = {};
+    const emailRx = /^[^\s@]+@[^\s@]+\.[^\s@]+$/i;
+
+    const phoneDigits = (payload.contacto ?? "").replace(/\D/g, "");
+    if (!payload.nome || payload.nome.trim().length < 2) {
+      errs.nome = "Informe o seu nome.";
     }
-    try {
-      setSubmitting(true);
-      console.log("Proposta enviada:", data);
-      setOpen(false);
-      form.reset(); // ✅ válido em HTMLFormElement
-      alert(
-        "Solicitação enviada com sucesso! Em breve entraremos em contacto."
-      );
-    } finally {
-      setSubmitting(false);
+    if (!payload.email || !emailRx.test(payload.email)) {
+      errs.email = "E-mail inválido.";
     }
+    if (!payload.contacto || phoneDigits.length < 9) {
+      errs.contacto = "Contacto inválido (mín. 9 dígitos).";
+    }
+    if (!payload.provincia) {
+      errs.provincia = "Selecione a província.";
+    }
+    if (!payload.tempo) {
+      errs.tempo = "Selecione o tempo.";
+    }
+    // Campo opcional: servico
+    if (payload.postos != null && String(payload.postos).trim() !== "") {
+      const n = Number(payload.postos);
+      if (Number.isNaN(n) || n < 0) errs.postos = "Informe um número válido.";
+    }
+    return errs;
   }
+
+ 
+  function isRecord(v: unknown): v is Record<string, unknown> {
+  return typeof v === "object" && v !== null;
+}
+
+async function onSubmit(form: HTMLFormElement) {
+  setErrors({});
+  const raw = Object.fromEntries(new FormData(form).entries()) as FormShape;
+
+  if (raw.contacto) raw.contacto = raw.contacto.replace(/\s+/g, " ").trim();
+  if (raw.email) raw.email = raw.email.trim();
+
+  const clientErrors = validate(raw);
+  if (Object.keys(clientErrors).length > 0) {
+    setErrors(clientErrors);
+    return;
+  }
+
+  try {
+    setSubmitting(true);
+
+    const res = await fetch(`${API_BASE}/propostas`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: globalThis.JSON.stringify(raw),
+    });
+
+    if (!res.ok) {
+      if (res.status === 422) {
+        const data: unknown = await res.json().catch(() => ({}));
+        const bag: ErrorBag = {};
+
+        if (isRecord(data) && isRecord(data.errors)) {
+          const errs = data.errors as Record<string, string[] | string>;
+          for (const [field, msgs] of Object.entries(errs)) {
+            bag[field] = Array.isArray(msgs) ? msgs[0] : String(msgs);
+          }
+        } else if (isRecord(data) && typeof data.message === "string") {
+          bag._ = data.message;
+        } else {
+          bag._ = "Falha ao submeter. Verifique os dados.";
+        }
+        setErrors(bag);
+        return;
+      }
+
+      const text = await res.text().catch(() => "");
+      throw new Error(text || `Erro ${res.status}`);
+    }
+
+    form.reset();
+    setOpen(false);
+    alert("Solicitação enviada com sucesso! Em breve entraremos em contacto.");
+  } catch (err: unknown) {
+    // Narrowing seguro sem 'any'
+    if (err instanceof Error) {
+      console.error(err);
+    } else {
+      console.error("Unknown error", err);
+    }
+    setErrors({ _: "Não foi possível enviar agora. Tente novamente." });
+  } finally {
+    setSubmitting(false);
+  }
+}
+
 
   return (
     <AnimatePresence>
@@ -129,6 +229,9 @@ export default function ProposalDrawer() {
                 Preencha os dados abaixo e nossa equipa entrará em contacto para
                 preparar uma proposta sob medida.
               </p>
+              {errors._ && (
+                <p className="mt-3 text-sm text-red-600">{errors._}</p>
+              )}
             </div>
 
             <form
@@ -137,6 +240,7 @@ export default function ProposalDrawer() {
                 e.preventDefault();
                 onSubmit(e.currentTarget);
               }}
+              noValidate
             >
               <SectionTitle>Identificação</SectionTitle>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
@@ -146,24 +250,28 @@ export default function ProposalDrawer() {
                   name="nome"
                   required
                   placeholder="Seu nome"
+                  errorMessage={errors.nome}
                 />
                 <Field
                   icon={Building2}
                   label="Empresa"
                   name="empresa"
                   placeholder="Nome da empresa"
+                  errorMessage={errors.empresa}
                 />
                 <Field
                   icon={IdCard}
                   label="NIF"
                   name="nif"
                   placeholder="Número de contribuinte"
+                  errorMessage={errors.nif}
                 />
                 <Field
                   icon={BriefcaseBusiness}
                   label="Actividade comercial"
                   name="actividade"
                   placeholder="Ex.: Oil & Gas"
+                  errorMessage={errors.actividade}
                 />
               </div>
 
@@ -176,6 +284,7 @@ export default function ProposalDrawer() {
                   type="email"
                   required
                   placeholder="voce@empresa.com"
+                  errorMessage={errors.email}
                 />
                 <Field
                   icon={Phone}
@@ -184,9 +293,9 @@ export default function ProposalDrawer() {
                   type="tel"
                   required
                   placeholder="+244 ..."
+                  errorMessage={errors.contacto}
                 />
 
-                {/* NOVO CAMPO */}
                 <SelectField
                   icon={MapPin}
                   label="Província"
@@ -194,6 +303,7 @@ export default function ProposalDrawer() {
                   options={PROVINCIAS as unknown as string[]}
                   placeholder="— selecione —"
                   required
+                  errorMessage={errors.provincia}
                 />
               </div>
 
@@ -204,7 +314,8 @@ export default function ProposalDrawer() {
                   label="Serviço que pretende"
                   name="servico"
                   placeholder="— selecione —"
-                  options={SERVICOS}
+                  options={SERVICOS as unknown as string[]}
+                  errorMessage={errors.servico}
                 />
                 <SelectField
                   icon={Clock8}
@@ -213,6 +324,7 @@ export default function ProposalDrawer() {
                   placeholder="— selecione —"
                   options={["12h", "24h", "48h"]}
                   required
+                  errorMessage={errors.tempo}
                 />
                 <Field
                   icon={Home}
@@ -221,12 +333,14 @@ export default function ProposalDrawer() {
                   type="number"
                   min={0}
                   placeholder="0"
+                  errorMessage={errors.postos}
                 />
                 <Field
                   icon={BriefcaseBusiness}
                   label="Categoria"
                   name="categoria"
                   placeholder="Ex.: Vigilante, Supervisor..."
+                  errorMessage={errors.categoria}
                 />
               </div>
 
@@ -235,6 +349,7 @@ export default function ProposalDrawer() {
                 name="mensagem"
                 rows={5}
                 placeholder="Especifique necessidades, locais, horários, SLAs, etc."
+                errorMessage={errors.mensagem}
               />
 
               <div className="mt-6 flex flex-col sm:flex-row gap-3">
@@ -296,6 +411,7 @@ function Field({
   required,
   min,
   placeholder,
+  errorMessage,
 }: {
   icon: React.ComponentType<{ size?: number; className?: string }>;
   label: string;
@@ -304,7 +420,9 @@ function Field({
   required?: boolean;
   min?: number;
   placeholder?: string;
+  errorMessage?: string;
 }) {
+  const erro = Boolean(errorMessage);
   return (
     <div>
       <Label htmlFor={name}>
@@ -322,11 +440,18 @@ function Field({
           min={min}
           required={required}
           placeholder={placeholder}
-          className="w-full h-11 pl-11 pr-3 border border-black/20 outline-none
-                     focus:border-brand-primary focus:shadow-[0_0_0_2px_rgba(214,164,52,.25)]
-                     placeholder:text-black/40"
+          aria-invalid={erro}
+          aria-describedby={erro ? `${name}-error` : undefined}
+          className={`w-full h-11 pl-11 pr-3 border outline-none placeholder:text-black/40
+            focus:shadow-[0_0_0_2px_rgba(214,164,52,.25)]
+            ${erro ? "border-red-500 focus:border-red-500" : "border-black/20 focus:border-brand-primary"}`}
         />
       </div>
+      {erro && (
+        <p id={`${name}-error`} className="mt-1 text-xs text-red-600">
+          {errorMessage}
+        </p>
+      )}
     </div>
   );
 }
@@ -338,6 +463,7 @@ function SelectField({
   options,
   placeholder = "— selecione —",
   required,
+  errorMessage,
 }: {
   icon: React.ComponentType<{ size?: number; className?: string }>;
   label: string;
@@ -345,7 +471,9 @@ function SelectField({
   options: string[];
   placeholder?: string;
   required?: boolean;
+  errorMessage?: string;
 }) {
+  const erro = Boolean(errorMessage);
   return (
     <div>
       <Label htmlFor={name}>
@@ -360,9 +488,12 @@ function SelectField({
           id={name}
           name={name}
           required={required}
-          className="appearance-none w-full h-11 pl-11 pr-9 border border-black/20 bg-white outline-none
-                     focus:border-brand-primary focus:shadow-[0_0_0_2px_rgba(214,164,52,.25)]"
           defaultValue=""
+          aria-invalid={erro}
+          aria-describedby={erro ? `${name}-error` : undefined}
+          className={`appearance-none w-full h-11 pl-11 pr-9 border bg-white outline-none
+            focus:shadow-[0_0_0_2px_rgba(214,164,52,.25)]
+            ${erro ? "border-red-500 focus:border-red-500" : "border-black/20 focus:border-brand-primary"}`}
         >
           <option value="" disabled>
             {placeholder}
@@ -378,6 +509,11 @@ function SelectField({
           size={16}
         />
       </div>
+      {erro && (
+        <p id={`${name}-error`} className="mt-1 text-xs text-red-600">
+          {errorMessage}
+        </p>
+      )}
     </div>
   );
 }
@@ -388,13 +524,16 @@ function TextArea({
   rows = 4,
   required,
   placeholder,
+  errorMessage,
 }: {
   label: string;
   name: string;
   rows?: number;
   required?: boolean;
   placeholder?: string;
+  errorMessage?: string;
 }) {
+  const erro = Boolean(errorMessage);
   return (
     <div>
       <Label htmlFor={name}>
@@ -407,10 +546,17 @@ function TextArea({
         rows={rows}
         required={required}
         placeholder={placeholder}
-        className="w-full px-3 py-3 border border-black/20 outline-none resize-y
-                   focus:border-brand-primary focus:shadow-[0_0_0_2px_rgba(214,164,52,.25)]
-                   placeholder:text-black/40"
+        aria-invalid={erro}
+        aria-describedby={erro ? `${name}-error` : undefined}
+        className={`w-full px-3 py-3 border outline-none resize-y placeholder:text-black/40
+          focus:shadow-[0_0_0_2px_rgba(214,164,52,.25)]
+          ${erro ? "border-red-500 focus:border-red-500" : "border-black/20 focus:border-brand-primary"}`}
       />
+      {erro && (
+        <p id={`${name}-error`} className="mt-1 text-xs text-red-600">
+          {errorMessage}
+        </p>
+      )}
     </div>
   );
 }
