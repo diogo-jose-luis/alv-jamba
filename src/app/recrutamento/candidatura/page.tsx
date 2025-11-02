@@ -3,12 +3,12 @@ import ContactBar from "@/components/ContactBar";
 import MainNav from "@/components/MainNav";
 import PageHero from "@/components/PageHero";
 import SiteFooter from "@/components/SiteFooter";
-import ProposalDrawer from "@/components/ProposalDrawer";
-import SpontaneousApplication from "@/components/SpontaneousApplication";
+
+import CandidateWizardForm from "@/components/CandidateWizardForm";
 
 export const metadata = {
-  title: "Candidatura Espontânea — ALVJAMBA",
-  description: "Envie a sua candidatura espontânea para integrar a ALVJAMBA Segurança Privada.",
+  title: "Candidatura — ALVJAMBA",
+  description: "Ficha de candidatura online (modelo oficial).",
 };
 
 export default function CandidaturaPage() {
@@ -20,17 +20,16 @@ export default function CandidaturaPage() {
 
       <main>
         <PageHero
-          title="Candidatura Espontânea"
-          subtitle="Profissionais com disciplina, integridade e foco no cliente."
+          title="Candidatura"
+          subtitle="Formulário oficial — baseado na ficha usada em papel."
           image="/hero/about.png"
           objectPosition="center top"
         />
 
-        <SpontaneousApplication />
+        <CandidateWizardForm />
       </main>
 
       <SiteFooter />
-      <ProposalDrawer />
     </>
   );
 }
