@@ -49,98 +49,100 @@ export default function MainNav() {
   const pathname = usePathname();
 
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [openIdx, setOpenIdx] = useState<number | null>(null);
+  const [openIdx, setOpenIdx] = useState<number | null>(null); // accordion no mobile
 
   const toggleMobile = () => setMobileOpen((p) => !p);
   const closeMobile = () => setMobileOpen(false);
 
+  // Fecha o drawer sempre que a rota muda (garante “funcionou o clique”).
   useEffect(() => {
     if (mobileOpen) setMobileOpen(false);
     setOpenIdx(null);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
+  // Scroll-lock no body quando o drawer está aberto
   useEffect(() => {
-    document.body.style.overflow = mobileOpen ? "hidden" : "";
-    return () => {
+    if (mobileOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
       document.body.style.overflow = "";
-    };
+    }
+    return () => { document.body.style.overflow = ""; };
   }, [mobileOpen]);
 
   return (
     <>
-      {/* barra de navegação em vinho, com links brancos e CTA dourado */}
       <div
         className={clsx(
           "w-full transition-all",
-          pinned && "fixed top-0 z-40"
+          pinned && "fixed top-0 z-40 bg-white/95 backdrop-blur shadow"
         )}
       >
-        <nav className="bg-brand-primary text-white">
-          <div className="container-xl h-12 flex items-center justify-between">
-            {/* --- desktop --- */}
-            <ul className="hidden md:flex items-stretch gap-2">
-              {ITEMS.map((it, idx) => {
-                const isActive =
-                  pathname === it.href || pathname?.startsWith(it.href + "/");
-                return (
-                  <li key={idx} className="relative group">
-                    <Link
-                      href={it.href}
-                      className={clsx(
-                        "px-4 h-12 flex items-center text-[15px] font-semibold hover:text-brand-secondary",
-                        isActive && "text-brand-secondary"
-                      )}
-                    >
-                      {it.label}
-                    </Link>
-
-                    {/* submenu (hover) */}
-                    {!!it.children?.length && (
-                      <ul className="absolute left-0 top-full z-50 hidden group-hover:block min-w-[240px] bg-brand-primary text-white border border-white/10 shadow-md">
-                        <li className="h-[3px] bg-brand-secondary" />
-                        {it.children.map((c, i) => (
-                          <li key={i} className="border-t border-white/15">
-                            <Link
-                              href={c.href}
-                              className="block px-4 py-3 text-sm hover:bg-white/10"
-                            >
-                              {c.label}
-                            </Link>
-                          </li>
-                        ))}
-                      </ul>
+        <nav className="container-xl flex items-center justify-between h-14">
+          {/* --- desktop --- */}
+          <ul className="hidden md:flex items-stretch gap-2">
+            {ITEMS.map((it, idx) => {
+              const isActive =
+                pathname === it.href || pathname?.startsWith(it.href + "/");
+              return (
+                <li key={idx} className="relative group">
+                  <Link
+                    href={it.href}
+                    className={clsx(
+                      "px-4 h-14 flex items-center text-sm font-semibold text-brand-ink hover:text-brand-primary relative",
+                      isActive &&
+                        "after:absolute after:inset-x-0 after:top-0 after:h-[3px] after:bg-brand-primary"
                     )}
-                  </li>
-                );
-              })}
-            </ul>
+                  >
+                    {it.label}
+                  </Link>
 
-            {/* CTA desktop */}
-            <a
-              href="#proposta"
-              onClick={(e) => {
-                e.preventDefault();
-                window.dispatchEvent(new CustomEvent("open-proposal"));
-              }}
-              className="hidden md:inline-flex items-center justify-center h-9 px-5 rounded-md
-                         bg-brand-secondary text-brand-ink font-bold
-                         hover:brightness-105 border border-brand-secondary"
-            >
-              Solicitar Proposta
-            </a>
+                  {/* submenu (desktop hover) */}
+                  {it.children?.length ? (
+                    <ul className="absolute left-0 top-full z-50 hidden group-hover:block min-w-[240px] bg-brand-primary text-white border border-white/10 shadow-md">
+                      <li className="h-[3px] bg-brand-primary" />
+                      {it.children.map((c, i) => (
+                        <li key={i} className="border-t border-white/15">
+                          <Link
+                            href={c.href}
+                            className="block px-4 py-3 text-sm hover:bg-brand-secondary hover:text-black"
+                          >
+                            {c.label}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  ) : null}
+                </li>
+              );
+            })}
+          </ul>
 
-            {/* hamburger mobile */}
-            <button
-              onClick={toggleMobile}
-              className="md:hidden text-white"
-              aria-label="Abrir menu"
-              aria-expanded={mobileOpen}
-              aria-controls="mobile-drawer"
-            >
-              {mobileOpen ? <X size={24} /> : <Menu size={24} />}
-            </button>
-          </div>
+          {/* CTA desktop */}
+          <a
+            href="#proposta"
+            onClick={(e) => {
+              e.preventDefault();
+              window.dispatchEvent(new CustomEvent("open-proposal"));
+            }}
+            className="hidden md:inline-flex items-center justify-center h-full px-5
+                       bg-brand-primary text-white border border-brand-primary
+                       hover:bg-transparent hover:text-brand-primary"
+          >
+            Solicitar Proposta
+          </a>
+
+          {/* hamburger mobile */}
+          <button
+            onClick={toggleMobile}
+            className="md:hidden text-brand-ink hover:text-brand-primary"
+            aria-label="Abrir menu"
+            aria-expanded={mobileOpen}
+            aria-controls="mobile-drawer"
+          >
+            {mobileOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
         </nav>
       </div>
 
@@ -153,7 +155,7 @@ export default function MainNav() {
         onClick={closeMobile}
       />
 
-      {/* drawer mobile (mesmo conteúdo) */}
+      {/* drawer mobile */}
       <div
         id="mobile-drawer"
         className={clsx(
@@ -181,6 +183,7 @@ export default function MainNav() {
 
             return (
               <div key={idx} className="mb-1">
+                {/* Linha do item pai (no mobile vira botão se tiver filhos) */}
                 {hasChildren ? (
                   <button
                     type="button"
@@ -207,6 +210,7 @@ export default function MainNav() {
                   </Link>
                 )}
 
+                {/* Submenu (mobile accordion) */}
                 {hasChildren && (
                   <ul
                     id={`submenu-${idx}`}
@@ -215,6 +219,7 @@ export default function MainNav() {
                       expanded ? "max-h-[480px] opacity-100" : "max-h-0 opacity-0"
                     )}
                   >
+                    {/* Link para a página pai (opcional) */}
                     <li>
                       <Link
                         href={it.href}

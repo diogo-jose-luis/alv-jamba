@@ -1,17 +1,16 @@
 // src/components/SelectionProcess.tsx
 "use client";
 
-import clsx from "clsx";
 import { motion } from "framer-motion";
 import {
   UserPlus,
   FileCheck2,
-  ShieldCheck,
   ClipboardCheck,
   GraduationCap,
   ContactRound,
-  FileSignature,
   BadgeCheck,
+  ShieldCheck,
+  FileSignature,
   MailCheck,
   ArrowRight,
 } from "lucide-react";
@@ -30,7 +29,7 @@ const STEPS: Step[] = [
     icon: UserPlus,
   },
   {
-    title: "Triagem & Verificação",
+    title: "Triagem e Verificação",
     desc: "Análise curricular, referências e verificação documental.",
     icon: FileCheck2,
   },
@@ -45,7 +44,7 @@ const STEPS: Step[] = [
     icon: ClipboardCheck,
   },
   {
-    title: "Formação & Certificação",
+    title: "Formação e Certificação",
     desc: "Módulos de segurança, QHSE e compliance no nosso Centro.",
     icon: GraduationCap,
   },
@@ -56,143 +55,153 @@ const STEPS: Step[] = [
   },
 ];
 
+// ordem visual do mock: 1-2-3 à esquerda | 5-4-6 à direita
+const LEFT_IDX = [0, 1, 2];
+const RIGHT_IDX = [4, 3, 5];
+
+function StepCard({
+  step,
+  index,
+}: {
+  step: Step;
+  index: number; // 0..5 para desenhar "01".."06"
+}) {
+  const Icon = step.icon;
+  const num = String(index + 1).padStart(2, "0");
+
+  return (
+    <motion.article
+      initial={{ opacity: 0, y: 14 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.3 }}
+      transition={{ duration: 0.45 }}
+      className="relative pl-20"
+    >
+      {/* bloco do ícone à esquerda (vinho) */}
+      <div className="absolute left-0 top-1/2 -translate-y-1/2 h-16 w-16 rounded-md grid place-items-center bg-brand-primary text-brand-secondary">
+        <Icon size={24} />
+      </div>
+
+      {/* ribbon superior (número + título) */}
+      <div className="inline-flex items-stretch h-8">
+        <div className="px-3 grid place-items-center bg-brand-primary text-white text-sm font-bold rounded-l-md">
+          {num}
+        </div>
+        <div className="px-3 grid place-items-center bg-gold-gradient text-brand-ink text-[13px] font-extrabold tracking-wide rounded-r-md uppercase">
+          {step.title}
+        </div>
+      </div>
+
+      {/* corpo branco com leve gradiente */}
+      <div className="mt-2 rounded-md bg-white/90 border border-black/10 shadow-sm">
+        <div className="px-4 py-4 text-black/80 text-sm leading-relaxed">
+          {step.desc}
+        </div>
+      </div>
+    </motion.article>
+  );
+}
+
 export default function SelectionProcess() {
   return (
     <section className="relative py-14 md:py-20">
-      {/* leve textura ao fundo */}
-      <div
-        className="absolute inset-0 -z-10 opacity-[0.05] bg-center bg-no-repeat bg-contain"
-        style={{ backgroundImage: "url('/dotted-map.png')" }}
-      />
-
       <div className="container-xl">
         {/* título */}
         <motion.div
-          initial={{ opacity: 0, y: 18 }}
+          initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.35 }}
-          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 0.6 }}
           className="text-center mb-10 md:mb-12"
         >
           <h2 className="font-heading text-3xl md:text-4xl font-extrabold text-brand-ink">
             Processo de Seleção
           </h2>
-          <p className="mt-3 text-black/70">
+          <p className="mt-3 text-center text-black/70 max-w-3xl mx-auto">
             Rigor, transparência e meritocracia — selecionamos profissionais com
             integridade, disciplina e foco no cliente.
           </p>
           <div className="mx-auto mt-4 h-1.5 w-24 bg-brand-secondary" />
         </motion.div>
 
-        {/* timeline responsiva */}
-        <div className="relative">
-          {/* linha guia (desktop) */}
-          <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-px bg-black/10" />
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-y-6 md:gap-y-10 md:gap-x-20">
-            {STEPS.map((s, i) => (
-              <motion.article
-                key={i}
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.3 }}
-                transition={{ duration: 0.55, delay: i * 0.06 }}
-                className="group relative bg-white border border-black/10 p-6 md:p-7"
-              >
-                {/* DOT + conector: alinha no centro entre as colunas */}
-                <div
-                  className={clsx(
-                    "hidden md:block absolute top-1/2 -translate-y-1/2 w-4 h-4 rounded-full",
-                    "border-2 border-brand-secondary bg-white",
-                    // par (coluna esquerda) -> encosta na direita; ímpar (coluna direita) -> encosta na esquerda
-                    i % 2 === 0 ? "right-[-10px]" : "left-[-10px]"
-                  )}
-                />
-                <div
-                  className={clsx(
-                    "hidden md:block absolute top-1/2 -translate-y-1/2 h-[2px] bg-brand-secondary/40",
-                    "w-8", // comprimento do traço até a linha central
-                    i % 2 === 0 ? "right-[-18px]" : "left-[-18px]"
-                  )}
-                />
-
-                {/* cabeçalho do passo */}
-                <div className="mb-4 flex items-center gap-3">
-                  <div className="w-12 h-12 grid place-content-center border-2 border-brand-secondary transition-colors group-hover:bg-brand-secondary">
-                    <s.icon
-                      size={22}
-                      className="text-brand-secondary group-hover:text-black"
-                    />
-                  </div>
-                  <div className="font-heading text-xl text-brand-ink">
-                    {String(i + 1).padStart(2, "0")} — {s.title}
-                  </div>
-                </div>
-
-                <p className="text-black/70 leading-relaxed">{s.desc}</p>
-
-                {/* hover sutil */}
-                <div className="absolute inset-0 bg-brand-primary/3 opacity-0 group-hover:opacity-100 transition-opacity" />
-              </motion.article>
+        {/* duas colunas com ordem do mock */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="space-y-6">
+            {LEFT_IDX.map((i) => (
+              <StepCard key={i} step={STEPS[i]} index={i} />
+            ))}
+          </div>
+          <div className="space-y-6">
+            {RIGHT_IDX.map((i) => (
+              <StepCard key={i} step={STEPS[i]} index={i} />
             ))}
           </div>
         </div>
 
-        {/* requisitos & documentos */}
-        <div className="mt-14 grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <motion.div
-            initial={{ opacity: 0, y: 18 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.35 }}
-            transition={{ duration: 0.6 }}
-            className="border border-black/10 bg-white p-6 md:p-7"
-          >
-            <div className="flex items-center gap-3 mb-4">
-              <ShieldCheck className="text-brand-primary" />
-              <h3 className="font-heading text-xl text-brand-ink">
-                Requisitos Gerais
-              </h3>
-            </div>
-            <ul className="space-y-2 text-black/75">
-              <li>• Idade mínima 21 anos e ensino médio completo;</li>
-              <li>• Registo criminal sem antecedentes relevantes;</li>
-              <li>• Boa apresentação, comunicação e postura profissional;</li>
-              <li>• Disponibilidade para turnos/escala e mobilidade;</li>
-              <li>• Condição física compatível com a função (exame médico);</li>
-              <li>• Compromisso com integridade, sigilo e disciplina.</li>
-            </ul>
-          </motion.div>
+        {/* faixa cinza de fundo com os 2 blocos */}
+        <div
+          className="mt-12 md:mt-14 rounded-xl p-6 md:p-8"
+          style={{
+            background:
+              "linear-gradient(90deg, rgba(0,0,0,0.06) 0%, rgba(0,0,0,0.03) 50%, rgba(0,0,0,0.06) 100%)",
+          }}
+        >
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8">
+            {/* Requisitos Gerais (cartão claro) */}
+            <motion.div
+              initial={{ opacity: 0, y: 14 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.45 }}
+              className="rounded-xl bg-white border border-black/10 p-6 md:p-7"
+            >
+              <div className="flex items-center gap-3 mb-3">
+                <ShieldCheck className="text-brand-primary" />
+                <h3 className="font-heading text-xl text-brand-ink">
+                  Requisitos Gerais
+                </h3>
+              </div>
+              <ul className="space-y-2 text-black/75">
+                <li>• Idade mínima 21 anos e ensino médio completo;</li>
+                <li>• Registo criminal sem antecedentes relevantes;</li>
+                <li>• Boa apresentação, comunicação e postura profissional;</li>
+                <li>• Disponibilidade para turnos/escala e mobilidade;</li>
+                <li>• Condição física compatível com a função (exame médico);</li>
+                <li>• Compromisso com integridade, sigilo e disciplina.</li>
+              </ul>
+            </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 18 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.35 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="border border-black/10 bg-white p-6 md:p-7"
-          >
-            <div className="flex items-center gap-3 mb-4">
-              <FileSignature className="text-brand-primary" />
-              <h3 className="font-heading text-xl text-brand-ink">
-                Documentos Necessários
-              </h3>
-            </div>
-            <ul className="space-y-2 text-black/75">
-              <li>• Bilhete de Identidade e NIF;</li>
-              <li>• CV atualizado e 1 foto tipo passe;</li>
-              <li>• Atestado médico e certificado de residência;</li>
-              <li>• Certidão/Registo Criminal atualizado;</li>
-              <li>• Certificados de formações (se houver);</li>
-              <li>• Carta de condução (para vagas que exijam).</li>
-            </ul>
-          </motion.div>
+            {/* Documentos Necessários (cartão vinho) */}
+            <motion.div
+              initial={{ opacity: 0, y: 14 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.45, delay: 0.05 }}
+              className="rounded-xl p-6 md:p-7 text-white"
+              style={{ backgroundColor: "#520b29" }}
+            >
+              <div className="flex items-center gap-3 mb-3">
+                <FileSignature className="text-brand-secondary" />
+                <h3 className="font-heading text-xl">Documentos Necessários</h3>
+              </div>
+              <ul className="space-y-2 text-white/90">
+                <li>• Bilhete de Identidade e NIF;</li>
+                <li>• CV atualizado e 1 foto tipo passe;</li>
+                <li>• Atestado médico e certificado de residência;</li>
+                <li>• Certidão/Registo Criminal atualizado;</li>
+                <li>• Certificados de formações (se houver);</li>
+                <li>• Carta de condução (para vagas que exijam).</li>
+              </ul>
+            </motion.div>
+          </div>
         </div>
 
         {/* chamada para ação */}
         <motion.div
-          initial={{ opacity: 0, y: 16 }}
+          initial={{ opacity: 0, y: 14 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.35 }}
-          transition={{ duration: 0.55 }}
+          transition={{ duration: 0.45 }}
           className="mt-12 md:mt-14 flex flex-col items-center text-center"
         >
           <div className="font-heading text-2xl text-brand-ink">
