@@ -705,7 +705,8 @@ function StepDocs({
   form: FormDataShape;
   setForm: (u: (p: FormDataShape) => FormDataShape) => void;
 }) {
-  const inputRefs = useRef<Record<string, HTMLInputElement | null>>({});
+
+  const inputRefs = useRef<Partial<Record<DocsKey, HTMLInputElement | null>>>({});
 
   return (
     <div className="space-y-5">
@@ -739,7 +740,7 @@ function StepDocs({
               <Upload size={16} /> Anexar
             </button>
             <input
-              ref={(el) => (inputRefs.current[doc] = el)}
+              ref={(el) => { inputRefs.current[doc] = el; }}
               type="file"
               className="hidden"
               onChange={(e) => {
