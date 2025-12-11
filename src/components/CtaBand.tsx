@@ -48,7 +48,7 @@ export default function CtaBand() {
                 href="tel:+244999000000"
                 className="underline decoration-transparent hover:decoration-current text-brand-secondary"
               >
-                (+244) 999 000 000
+                (+244) 973 722 035
               </a>
             </h3>
             <p className="mt-1 text-white/85 text-sm md:text-base">

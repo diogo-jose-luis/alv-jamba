@@ -6,8 +6,8 @@ export default function TopBar() {
     <div className="hidden md:block bg-[#222222] text-white/80 text-sm">
       <div className="container-xl flex items-center justify-between h-10">
         <div className="flex items-center gap-4">
-          <a href="#" aria-label="Facebook" className="hover:text-white"><Facebook size={16} /></a>
-          <a href="#" aria-label="LinkedIn" className="hover:text-white"><Linkedin size={16} /></a>
+          <a href="https://www.facebook.com/profile.php?id=61584614113824" aria-label="Facebook" className="hover:text-white"><Facebook size={16} /></a>
+          <a href="https://www.linkedin.com/company/alvjamba-ao/?viewAsMember=true" aria-label="LinkedIn" className="hover:text-white"><Linkedin size={16} /></a>
           <a href="#" aria-label="Instagram" className="hover:text-white"><Instagram size={16} /></a>
         </div>
         <div className="flex items-center gap-6">

@@ -3,8 +3,8 @@ import Image from "next/image";
 import { Clock4, Phone, Mail, MessageCircle } from "lucide-react";
 import { Facebook, Linkedin, Instagram } from "lucide-react";
 
-const WHATSAPP_NUMBER = "+244 999 000 000";
-const WHATSAPP_LINK = `https://wa.me/244999000000?text=${encodeURIComponent(
+const WHATSAPP_NUMBER = "+244 973 722 035";
+const WHATSAPP_LINK = `https://wa.me/244973722035?text=${encodeURIComponent(
   "Olá, gostaria de solicitar uma proposta."
 )}`;
 
@@ -76,8 +76,8 @@ export default function ContactBar() {
             title="Horário"
             value="Seg-Dom: 08h00 - 22h30"
           />
-          <InfoItem icon={Phone} title="Ligue" value="+244 999 000 000" />
-          <InfoItem icon={Mail} title="E-mail" value="contato@alvjamba.com" />
+          <InfoItem icon={Phone} title="Ligue" value="+244 973 722 035" />
+          <InfoItem icon={Mail} title="E-mail" value="comercial@alv-jamba.com" />
           <InfoItem
             icon={MessageCircle}
             title="WhatsApp"
@@ -90,7 +90,7 @@ export default function ContactBar() {
         <div className="hidden md:flex items-center gap-4">
           <a
             aria-label="LinkedIn"
-            href="#"
+            href="https://www.linkedin.com/company/alvjamba-ao/?viewAsMember=true"
             className="rounded-md p-2 bg-brand-primary/10 text-brand-primary hover:bg-brand-primary hover:text-white transition"
           >
             <Linkedin size={18} />
@@ -104,7 +104,7 @@ export default function ContactBar() {
           </a>
           <a
             aria-label="Facebook"
-            href="#"
+            href="https://www.facebook.com/profile.php?id=61584614113824"
             className="rounded-md p-2 bg-brand-primary/10 text-brand-primary hover:bg-brand-primary hover:text-white transition"
           >
             <Facebook size={18} />

@@ -44,7 +44,7 @@ export default function AboutCompanySection({
             <p className="text-lg text-black/80">
               A <strong>ALVJAMBA - COMÉRCIO GERAL LIMITADA</strong> é uma empresa de direito
               Angolano, vocacionada a prestar <strong>serviços de Segurança Privada</strong>.
-              Fundada aos <strong>26 de Novembro de 2012</strong> pela sócia-gerente
+              Fundada aos <strong>14 de Dezembro de 2011</strong> pela sócia-gerente
               <strong> Stiviandra Ribeiro de Oliveira</strong>.
             </p>
             <p>

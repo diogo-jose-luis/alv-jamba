@@ -34,8 +34,8 @@ export default function ContactMapBand({
             icon={<MapPin size={20} />}
             title="Visite-nos"
             lines={[
-              "Rua Comandante Argueles Nº 158",
-              "Bairro do Prenda, Maianga",
+              "Luanda, distrito urbano da Ingombota",
+              "Bairro do Prenda, rua dos Mareantes e D. João 111",
               "Luanda — Angola",
             ]}
           />
@@ -45,8 +45,8 @@ export default function ContactMapBand({
             icon={<Mail size={20} />}
             title="Envie-nos um e-mail"
             lines={[
-              "geral@alvjamba.co.ao",
-              "comercial@alvjamba.co.ao",
+              "comercial@alv-jamba.com",
+              "comercial@alv-jamba.com",
             ]}
             isLink
           />
@@ -56,8 +56,8 @@ export default function ContactMapBand({
             icon={<Phone size={20} />}
             title="Ligue-nos"
             lines={[
-              "+244 9XX XXX XXX",
-              "+244 9XX XXX XXX",
+              "+244 973 722 035",
+              "+244 973 722 035",
             ]}
             isTel
           />

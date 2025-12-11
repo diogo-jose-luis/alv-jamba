@@ -41,7 +41,7 @@ export default function FormacaoPage() {
         // ]}
         />
 
-        <CoursesCatalogue />
+        {/* <CoursesCatalogue /> */}
       </main>
 
       <SiteFooter />
