@@ -19,9 +19,10 @@ import {
   Camera,
   MapPin,
   Smartphone,
-  WifiOff,
   ArrowRight,
 } from "lucide-react";
+
+
 
 type Tip = { text: string };
 

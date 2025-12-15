@@ -32,7 +32,15 @@ const ITEMS: Item[] = [
       { label: "Candidatura Espontânea", href: "/recrutamento/candidatura" },
     ],
   },
-  { label: "Responsabilidade social", href: "/responsabilidade-social" },
+  {
+    label: "Atualidade",
+    href: "#",
+    children: [
+      { label: "Artigos", href: "/artigos" },
+      { label: "Utilidade pública", href: "/utilidade-publica" },
+      { label: "Responsabilidade social", href: "/responsabilidade-social" },
+    ],
+  },
   {
     label: "Advertência",
     href: "/advertencia/empresas",
@@ -71,18 +79,15 @@ export default function MainNav() {
     <>
       {/* barra de navegação em vinho, com links brancos e CTA dourado */}
       <div
-        className={clsx(
-          "w-full transition-all",
-          pinned && "fixed top-0 z-40"
-        )}
+        className={clsx("w-full transition-all", pinned && "fixed top-0 z-40")}
       >
-        <nav className="bg-brand-primary text-white">
+        <nav className="text-white bg-[url('/frames/fundo_menu.png')] bg-cover bg-center bg-no-repeat">
           <div className="container-xl h-12 flex items-center justify-between">
             {/* --- desktop --- */}
-            <ul className="hidden md:flex items-stretch gap-2">
+            <ul className="hidden md:flex items-stretch gap-4">
               {ITEMS.map((it, idx) => {
                 const isActive =
-                  pathname === it.href || pathname?.startsWith(it.href + "/");
+                  pathname == it.href || pathname?.startsWith(it.href + "/");
                 return (
                   <li key={idx} className="relative group">
                     <Link
@@ -123,7 +128,7 @@ export default function MainNav() {
                 e.preventDefault();
                 window.dispatchEvent(new CustomEvent("open-proposal"));
               }}
-              className="hidden md:inline-flex items-center justify-center h-9 px-5 rounded-md
+              className="hidden md:inline-flex items-center justify-center h-9 px-5 my-4 rounded-md
                          bg-brand-secondary text-brand-ink font-bold
                          hover:brightness-105 border border-brand-secondary"
             >
@@ -177,7 +182,7 @@ export default function MainNav() {
         <nav className="flex-1 overflow-y-auto px-2 py-2">
           {ITEMS.map((it, idx) => {
             const hasChildren = !!it.children?.length;
-            const expanded = openIdx === idx;
+            const expanded = openIdx == idx;
 
             return (
               <div key={idx} className="mb-1">
@@ -212,7 +217,9 @@ export default function MainNav() {
                     id={`submenu-${idx}`}
                     className={clsx(
                       "overflow-hidden transition-[max-height,opacity] duration-300",
-                      expanded ? "max-h-[480px] opacity-100" : "max-h-0 opacity-0"
+                      expanded
+                        ? "max-h-[480px] opacity-100"
+                        : "max-h-0 opacity-0"
                     )}
                   >
                     <li>

@@ -1,9 +1,10 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { CalendarDays, UserRound, ArrowRight } from "lucide-react";
 
-type Post = {
+export type Post = {
   title: string;
   date: string;
   author?: string;
@@ -12,7 +13,7 @@ type Post = {
   href?: string;
 };
 
-const POSTS: Post[] = [
+export const POSTS: Post[] = [
   {
     title: "Novas Técnicas de Segurança",
     date: "2 Jul, 2023",
@@ -42,7 +43,15 @@ const POSTS: Post[] = [
   },
 ];
 
-function PostCard({ title, date, author, excerpt, image, href = "#" }: Post) {
+function PostCard({
+  title,
+  date,
+  author,
+  excerpt,
+  image,
+  href = "#",
+  priority = false,
+}: Post & { priority?: boolean }) {
   return (
     <article className="group">
       {/* imagem */}
@@ -53,7 +62,7 @@ function PostCard({ title, date, author, excerpt, image, href = "#" }: Post) {
           width={960}
           height={640}
           className="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-          priority
+          priority={priority}
         />
       </div>
 
@@ -71,41 +80,61 @@ function PostCard({ title, date, author, excerpt, image, href = "#" }: Post) {
 
       {/* título + excerto */}
       <h3 className="mt-3 font-heading text-xl font-extrabold text-brand-ink group-hover:text-brand-primary transition-colors">
-        <a href="#">{title.toUpperCase()}</a>
+        <Link href={href} className="block">
+          {title.toUpperCase()}
+        </Link>
       </h3>
-      <p className="mt-2 text-black/70 leading-relaxed line-clamp-3">
-        {excerpt}
-      </p>
+
+      <p className="mt-2 text-black/70 leading-relaxed line-clamp-3">{excerpt}</p>
 
       {/* ler mais */}
-      <a
-        href="#"
+      <Link
+        href={href}
         className="mt-3 inline-flex items-center gap-2 font-semibold text-brand-primary hover:text-brand-ink"
       >
         Ler mais <ArrowRight size={16} />
-      </a>
+      </Link>
     </article>
   );
 }
 
-export default function NewsSection() {
+type Props = {
+  posts?: Post[];
+  itemsToShow?: number; // ex: 3 no Home
+  showHeader?: boolean; // false na página /artigos
+  title?: string;
+  subtitle?: string;
+  className?: string;
+};
+
+export default function NewsSection({
+  posts = POSTS,
+  itemsToShow,
+  showHeader = true,
+  title = "ARTIGOS E UTILIDADE PÚBLICA",
+  subtitle = "Atualizações, operações e insights da ALVJAMBA.",
+  className = "",
+}: Props) {
+  const visiblePosts =
+    typeof itemsToShow === "number" ? posts.slice(0, itemsToShow) : posts;
+
   return (
-    <section className="py-16 md:py-24">
+    <section className={`py-16 md:py-24 ${className}`}>
       <div className="container-xl">
         {/* título */}
-        <div className="text-center mb-10 md:mb-12">
-          <h2 className="font-heading text-3xl md:text-4xl font-extrabold text-brand-ink">
-            ÚLTIMAS NOTÍCIAS
-          </h2>
-          <p className="mt-3 text-black/70">
-            Atualizações, operações e insights da ALVJAMBA.
-          </p>
-        </div>
+        {showHeader && (
+          <div className="text-center mb-10 md:mb-12">
+            <h2 className="font-heading text-3xl md:text-4xl font-extrabold text-brand-ink">
+              {title}
+            </h2>
+            <p className="mt-3 text-black/70">{subtitle}</p>
+          </div>
+        )}
 
         {/* grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {POSTS.map((p, i) => (
-            <PostCard key={i} {...p} />
+          {visiblePosts.map((p, i) => (
+            <PostCard key={p.href ?? `${p.title}-${i}`} {...p} priority={i === 0} />
           ))}
         </div>
       </div>

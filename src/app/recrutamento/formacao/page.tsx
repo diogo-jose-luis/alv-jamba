@@ -6,7 +6,6 @@ import PageHero from "@/components/PageHero";
 import SiteFooter from "@/components/SiteFooter";
 import ProposalDrawer from "@/components/ProposalDrawer";
 import TrainingOverview from "@/components/TrainingOverview";
-import CoursesCatalogue from "@/components/CoursesCatalogue";
 import TrainingVideos from "@/components/TrainingVideos";
 
 export const metadata = {

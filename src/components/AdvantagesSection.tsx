@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { Headphones, Star, XCircle, ArrowRight } from "lucide-react";
+import { Headphones, Star, XCircle } from "lucide-react";
 
 type Card = {
   title: string;
@@ -72,8 +72,7 @@ function AdvantageCard({ title, desc, image, icon: Icon, href = "#" }: Card) {
           href="#"
           className="mt-5 inline-flex items-center gap-2 font-semibold text-brand-secondary hover:text-white transition-colors"
         >
-          Ler mais
-          <ArrowRight size={16} />
+          929 414 305 | 935 803 517
         </a>
       </div>
 

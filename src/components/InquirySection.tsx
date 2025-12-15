@@ -2,22 +2,6 @@
 
 import { useState } from "react";
 
-const SERVICOS = [
-  "Segurança Física",
-  "Segurança Marítima/Offshore",
-  "Segurança Onshore",
-  "Segurança Electrónica",
-  "Assistente de Porto e Aeroporto",
-  "Escolta de Mercadorias e Valores",
-  "Vigilância Marítima",
-  "QRF – Força de Reação Armada",
-  "CIT – Transporte de Valores",
-  "Serviço de Escolta",
-  "Serviços de Motoristas",
-  "Divisão de Segurança Contra Incêndios",
-  "Recepcionistas",
-];
-
 type InquiryForm = {
   name: string;
   email: string;
@@ -38,6 +22,10 @@ export default function InquirySection() {
   const [sending, setSending] = useState(false);
   const [form, setForm] = useState<InquiryForm>(INITIAL);
 
+  const [submitting, setSubmitting] = useState(false);
+  const [ok, setOk] = useState<string | null>(null);
+  const [err, setErr] = useState<string | null>(null);
+
   function onChange(
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) {
@@ -45,20 +33,55 @@ export default function InquirySection() {
     setForm((f) => ({ ...f, [name]: value }));
   }
 
-  async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    if (!form.name || !form.email) {
-      alert("Preencha pelo menos Nome e E-mail.");
+    setOk(null);
+    setErr(null);
+
+    const form = e.currentTarget;
+    const data = Object.fromEntries(new FormData(form).entries()) as Record<
+      string,
+      FormDataEntryValue
+    >;
+
+    // honeypot (sem any)
+    const gotcha = typeof data["_gotcha"] === "string" ? data["_gotcha"] : "";
+    if (gotcha) return;
+
+    const name = String(data["name"] ?? "");
+    const email = String(data["email"] ?? "");
+    const message = String(data["message"] ?? "");
+
+    if (!name || !email || !message) {
+      setErr("Por favor, preencha Nome, E-mail e Mensagem.");
       return;
     }
+
     try {
-      setSending(true);
-      // TODO: enviar para sua API
-      console.log("Inquiry:", form);
-      setForm(INITIAL); // limpa
-      alert("Enviado. Em breve entraremos em contacto.");
+      setSubmitting(true);
+
+      const res = await fetch(
+        `https://sisgema-alvjamba-api.alv-jamba.com/api/contactos`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ name, email, message }),
+        }
+      );
+
+      const json = await res.json().catch(() => ({}));
+
+      if (!res.ok) {
+        alert(json?.message ?? "Ocorreu um erro ao enviar. Tente novamente.");
+        return;
+      }
+
+      form.reset();
+      alert("Mensagem enviada com sucesso. Em breve entraremos em contacto.");
+    } catch {
+      alert("Ocorreu um erro ao enviar. Tente novamente.");
     } finally {
-      setSending(false);
+      setSubmitting(false);
     }
   }
 
@@ -108,20 +131,7 @@ export default function InquirySection() {
                 onChange={onChange}
               />
 
-              {/* Serviço pretendido */}
-              <SelectField
-                label="Interessado em"
-                name="service"
-                value={form.service}
-                onChange={onChange}
-              >
-                <option value="">— selecione —</option>
-                {SERVICOS.map((s) => (
-                  <option key={s} value={s}>
-                    {s}
-                  </option>
-                ))}
-              </SelectField>
+          
 
               {/* Comentários */}
               <Field

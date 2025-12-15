@@ -11,13 +11,10 @@ import SiteFooter from "@/components/SiteFooter";
 import ProposalDrawer from "@/components/ProposalDrawer";
 import {
   Building2,
-  ShieldAlert,
-  Lock,
   Camera,
   KeyRound,
   Truck,
   Users,
-  FileCheck2,
   Server,
   WifiOff,
   CheckCircle2,

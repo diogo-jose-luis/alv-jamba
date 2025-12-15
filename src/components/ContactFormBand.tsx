@@ -35,10 +35,25 @@ export default function ContactFormBand() {
 
     try {
       setSubmitting(true);
-      // TODO: enviar para sua API
-      console.log("CONTACT FORM:", { name, email, message });
+
+      const res = await fetch(
+        `https://sisgema-alvjamba-api.alv-jamba.com/api/contactos`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ name, email, message }),
+        }
+      );
+
+      const json = await res.json().catch(() => ({}));
+
+      if (!res.ok) {
+        alert(json?.message ?? "Ocorreu um erro ao enviar. Tente novamente.");
+        return;
+      }
+
       form.reset();
-      setOk("Mensagem enviada com sucesso. Em breve entraremos em contacto.");
+      alert("Mensagem enviada com sucesso. Em breve entraremos em contacto.");
     } catch {
       setErr("Ocorreu um erro ao enviar. Tente novamente.");
     } finally {

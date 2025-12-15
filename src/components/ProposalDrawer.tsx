@@ -25,7 +25,7 @@ declare global {
 }
 
 const API_BASE =
-  process.env.NEXT_PUBLIC_API_BASE?.replace(/\/$/, "") || "https://apsm.idsolucoes.ao/api";
+  process.env.NEXT_PUBLIC_API_BASE?.replace(/\/$/, "") || "https://sisgema-alvjamba-api.alv-jamba.com/api";
 
 const SERVICOS = [
   "Segurança Física",
@@ -94,7 +94,7 @@ export default function ProposalDrawer() {
   }, []);
 
   useEffect(() => {
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
+    const onKey = (e: KeyboardEvent) => e.key == "Escape" && setOpen(false);
     if (open) window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [open]);
@@ -129,7 +129,7 @@ export default function ProposalDrawer() {
 
  
   function isRecord(v: unknown): v is Record<string, unknown> {
-  return typeof v === "object" && v !== null;
+  return typeof v == "object" && v !== null;
 }
 
 async function onSubmit(form: HTMLFormElement) {
@@ -158,7 +158,7 @@ async function onSubmit(form: HTMLFormElement) {
     });
 
     if (!res.ok) {
-      if (res.status === 422) {
+      if (res.status == 422) {
         const data: unknown = await res.json().catch(() => ({}));
         const bag: ErrorBag = {};
 
@@ -167,7 +167,7 @@ async function onSubmit(form: HTMLFormElement) {
           for (const [field, msgs] of Object.entries(errs)) {
             bag[field] = Array.isArray(msgs) ? msgs[0] : String(msgs);
           }
-        } else if (isRecord(data) && typeof data.message === "string") {
+        } else if (isRecord(data) && typeof data.message == "string") {
           bag._ = data.message;
         } else {
           bag._ = "Falha ao submeter. Verifique os dados.";
@@ -376,7 +376,7 @@ async function onSubmit(form: HTMLFormElement) {
   );
 }
 
-/* ====== UI ====== */
+/* ==== UI ==== */
 
 function SectionTitle({ children }: { children: React.ReactNode }) {
   return (

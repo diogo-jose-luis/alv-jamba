@@ -104,6 +104,7 @@ export default function SpontaneousApplication() {
   }, []);
 
   async function onSubmit(form: HTMLFormElement) {
+    
     const data = new FormData(form);
     const f: FormFields = {
       nome: String(data.get("nome") || ""),

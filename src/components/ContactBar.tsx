@@ -111,9 +111,6 @@ export default function ContactBar() {
           </a>
         </div>
       </div>
-
-      {/* separador: faixa com gradiente (igual à imagem) */}
-      <div className="h-8 w-full bg-gold-gradient" />
     </div>
   );
 }

@@ -58,7 +58,7 @@ type Feature = {
 const FEATURES: Feature[] = [
   {
     icon: Hourglass,
-    title: "25 anos de experiência",
+    title: "15 anos de experiência",
     text: "Processos maduros, disciplina operacional e melhoria contínua.",
   },
   {

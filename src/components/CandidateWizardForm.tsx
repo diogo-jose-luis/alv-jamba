@@ -20,7 +20,7 @@ import {
 } from "lucide-react";
 import clsx from "clsx";
 
-/* =================== CONSTANTES =================== */
+/* ============= CONSTANTES ============= */
 
 const PROVINCIAS = [
   "Luanda",
@@ -67,7 +67,7 @@ const DOCS_BASE = [
   "Certificado de Trabalho",
 ] as const;
 
-/* =================== TIPOS =================== */
+/* ============= TIPOS ============= */
 
 type DocsKey = (typeof DOCS_BASE)[number];
 
@@ -121,7 +121,7 @@ type FormDataShape = {
   observacoes: string;
 };
 
-/* =================== COMPONENTE PRINCIPAL =================== */
+/* ============= COMPONENTE PRINCIPAL ============= */
 
 export default function CandidateWizardForm() {
   const [step, setStep] = useState(0);
@@ -132,42 +132,42 @@ export default function CandidateWizardForm() {
 
   const DEMO_FORM: FormDataShape = {
     // Passo 1 — Dados Pessoais
-    nome: "Toniclenio Luis",
-    dataNasc: "1990-05-12",
-    estadoCivil: "Solteiro",
-    nacionalidade: "Angolana",
-    naturalDe: "Luanda",
-    bi: "GA-1234567-8",
-    bairro: "Talatona",
-    rua: "Rua do Mar",
-    casa: "12A",
-    municipio: "Belas",
-    provincia: "Luanda",
-    telefone: "+244 923 000 111",
-    telefone2: "+244 922 111 222",
-    email: "toniclenio.luis@example.com",
-    contaBancaria: "AO06 0000 0000 0000 0000 0000",
+    nome: "",
+    dataNasc: "",
+    estadoCivil: "",
+    nacionalidade: "",
+    naturalDe: "",
+    bi: "",
+    bairro: "",
+    rua: "",
+    casa: "",
+    municipio: "",
+    provincia: "",
+    telefone: "",
+    telefone2: "",
+    email: "",
+    contaBancaria: "",
 
     // Passo 2 — Formação / Línguas
-    nivelAcademico: "Ensino Médio",
-    curso: "Técnico de Segurança",
-    escola: "Escola Técnica de Luanda",
-    inicioCurso: "2008-02-01",
-    fimCurso: "2010-12-15",
-    lingua1: "Português",
-    lingua1Nivel: "Fluente",
-    lingua2: "Inglês",
-    lingua2Nivel: "Intermediário",
+    nivelAcademico: "",
+    curso: "",
+    escola: "",
+    inicioCurso: "",
+    fimCurso: "",
+    lingua1: "",
+    lingua1Nivel: "",
+    lingua2: "",
+    lingua2Nivel: "",
 
     // Passo 3 — Experiência
-    funcaoAtual: "Vigilante Supervisor",
-    empresaAtual: "Segurança Angola Lda",
-    salario: "45000",
-    admissao: "2018-03-01",
+    funcaoAtual: "",
+    empresaAtual: "",
+    salario: "",
+    admissao: "",
     demissao: "",
     actividades:
-      "Supervisão de turno, formação de equipas, relatórios diários.",
-    pretensaoSalarial: "60000",
+      "",
+    pretensaoSalarial: "",
 
     // Passo 4 — Documentos (checklist + anexos opcionais)
     docs: Object.fromEntries(DOCS_BASE.map((d) => [d, true])) as Record<
@@ -177,11 +177,11 @@ export default function CandidateWizardForm() {
     anexos: {},
 
     // Passo 5 — Preferências
-    areaInteresse: "Segurança Física",
-    cargoPretendido: "Supervisor de Posto",
-    disponibilidade: "15 dias",
-    inicioPrevisto: "2025-08-01",
-    observacoes: "Disponível para deslocações e turnos noturnos.",
+    areaInteresse: "",
+    cargoPretendido: "",
+    disponibilidade: "",
+    inicioPrevisto: "",
+    observacoes: "",
   };
 
   const [form, setForm] = useState<FormDataShape>(() => DEMO_FORM);
@@ -209,11 +209,11 @@ export default function CandidateWizardForm() {
     []
   );
 
-  /* ========== validação simples por passo ========== */
+  /* ======= validação simples por passo ======= */
   function validateStep(idx: number): string[] {
     const errs: string[] = [];
 
-    if (idx === 0) {
+    if (idx == 0) {
       if (!form.nome.trim()) errs.push("Informe o nome completo.");
       if (!form.dataNasc) errs.push("Informe a data de nascimento.");
       if (!form.nacionalidade.trim()) errs.push("Informe a nacionalidade.");
@@ -225,7 +225,7 @@ export default function CandidateWizardForm() {
         errs.push("Contacto inválido (mín. 9 dígitos).");
     }
 
-    if (idx === 1) {
+    if (idx == 1) {
       if (!form.nivelAcademico.trim()) errs.push("Informe o nível académico.");
       if (
         form.inicioCurso &&
@@ -236,13 +236,13 @@ export default function CandidateWizardForm() {
       }
     }
 
-    if (idx === 2) {
+    if (idx == 2) {
       // Só valida se usuário preencheu algo essencial
       if (form.empresaAtual && !form.funcaoAtual)
         errs.push("Informe a função na empresa atual.");
     }
 
-    if (idx === 4) {
+    if (idx == 4) {
       if (!form.cargoPretendido.trim())
         errs.push("Informe o cargo pretendido.");
       if (!form.disponibilidade) errs.push("Selecione a disponibilidade.");
@@ -284,7 +284,7 @@ export default function CandidateWizardForm() {
     });
   }
 
-  /* ========== UI ========== */
+  /* ======= UI ======= */
 
   return (
     <section className="py-14 md:py-20 bg-white">
@@ -311,7 +311,7 @@ export default function CandidateWizardForm() {
                 key={s.key}
                 className={clsx(
                   "px-4 py-3 text-sm flex items-center gap-2",
-                  i === step ? "bg-black/[0.03] font-semibold" : "bg-white"
+                  i == step ? "bg-black/[0.03] font-semibold" : "bg-white"
                 )}
               >
                 <span className="text-brand-primary">{s.icon}</span>
@@ -327,7 +327,7 @@ export default function CandidateWizardForm() {
             <div
               className={clsx(
                 "m-4 mb-0 p-3 text-sm border",
-                msg.type === "ok"
+                msg.type == "ok"
                   ? "bg-green-50 border-green-200 text-green-700"
                   : "bg-red-50 border-red-200 text-red-700"
               )}
@@ -346,13 +346,13 @@ export default function CandidateWizardForm() {
                 exit={{ opacity: 0, x: -12 }}
                 transition={{ duration: 0.18 }}
               >
-                {step === 0 && <StepPessoais form={form} setForm={setForm} />}
-                {step === 1 && <StepFormacao form={form} setForm={setForm} />}
-                {step === 2 && (
+                {step == 0 && <StepPessoais form={form} setForm={setForm} />}
+                {step == 1 && <StepFormacao form={form} setForm={setForm} />}
+                {step == 2 && (
                   <StepExperiencia form={form} setForm={setForm} />
                 )}
-                {step === 3 && <StepDocs form={form} setForm={setForm} />}
-                {step === 4 && (
+                {step == 3 && <StepDocs form={form} setForm={setForm} />}
+                {step == 4 && (
                   <StepPreferencias form={form} setForm={setForm} />
                 )}
               </motion.div>
@@ -364,7 +364,7 @@ export default function CandidateWizardForm() {
                 <button
                   type="button"
                   onClick={prev}
-                  disabled={step === 0}
+                  disabled={step == 0}
                   className="inline-flex items-center h-11 px-4 border border-black/20 hover:bg-black/5 disabled:opacity-50"
                 >
                   <ChevronLeft size={18} className="mr-2" /> Anterior
@@ -402,7 +402,7 @@ export default function CandidateWizardForm() {
   );
 }
 
-/* =================== PASSOS =================== */
+/* ============= PASSOS ============= */
 
 function StepPessoais({
   form,
@@ -859,7 +859,7 @@ function StepPreferencias({
   );
 }
 
-/* =================== SUB-COMPONENTES UI =================== */
+/* ============= SUB-COMPONENTES UI ============= */
 
 function SectionTitle({
   children,

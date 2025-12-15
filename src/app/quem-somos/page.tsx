@@ -6,7 +6,6 @@ import SiteFooter from "@/components/SiteFooter";
 import PageHero from "@/components/PageHero";
 import AboutCompanySection from "@/components/AboutCompanySection";
 import MissionVisionValues from "@/components/MissionVisionValues";
-import ClientsStrip from "@/components/ClientsStrip";
 import PolicyPrinciples from "@/components/PolicyPrinciples";
 import ClientsMarquee from "@/components/ClientsMarquee";
 

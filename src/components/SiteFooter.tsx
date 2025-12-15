@@ -3,6 +3,7 @@
 
 import Image from "next/image";
 import { Facebook, Linkedin, Instagram, Mail, Phone } from "lucide-react";
+import { useState } from "react";
 
 const LINKS = [
   { label: "Sobre nós", href: "/quem-somos" },
@@ -21,6 +22,63 @@ const UPDATES = [
 ];
 
 export default function SiteFooter() {
+
+  const [submitting, setSubmitting] = useState(false);
+    const [ok, setOk] = useState<string | null>(null);
+    const [err, setErr] = useState<string | null>(null);
+
+  async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setOk(null);
+    setErr(null);
+
+    const form = e.currentTarget;
+    const data = Object.fromEntries(new FormData(form).entries()) as Record<
+      string,
+      FormDataEntryValue
+    >;
+
+    // honeypot (sem any)
+    const gotcha = typeof data["_gotcha"] === "string" ? data["_gotcha"] : "";
+    if (gotcha) return;
+
+    const name = String(data["name"] ?? "");
+    const email = String(data["email"] ?? "");
+    const message = String(data["message"] ?? "");
+
+    if (!name || !email || !message) {
+      setErr("Por favor, preencha Nome, E-mail e Mensagem.");
+      return;
+    }
+
+    try {
+      setSubmitting(true);
+
+      const res = await fetch(
+        `https://sisgema-alvjamba-api.alv-jamba.com/api/contactos`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ name, email, message }),
+        }
+      );
+
+      const json = await res.json().catch(() => ({}));
+
+      if (!res.ok) {
+        alert(json?.message ?? "Ocorreu um erro ao enviar. Tente novamente.");
+        return;
+      }
+
+      form.reset();
+      alert("Mensagem enviada com sucesso. Em breve entraremos em contacto.");
+    } catch {
+      alert("Ocorreu um erro ao enviar. Tente novamente.");
+    } finally {
+      setSubmitting(false);
+    }
+  }
+
   return (
     <footer className="relative">
       {/* bloco principal escuro */}
@@ -82,13 +140,7 @@ export default function SiteFooter() {
             <h4 className="font-heading text-lg font-extrabold mb-4 text-white">CONTACTE-NOS</h4>
             <form
               className="space-y-3"
-              onSubmit={(e) => {
-                e.preventDefault();
-                const data = Object.fromEntries(new FormData(e.currentTarget).entries());
-                console.log("footer message:", data);
-                (e.currentTarget as HTMLFormElement).reset();
-                alert("Mensagem enviada! Obrigado pelo contacto.");
-              }}
+              onSubmit={onSubmit}
             >
               <input
                 name="name"

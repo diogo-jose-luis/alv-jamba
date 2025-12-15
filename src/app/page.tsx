@@ -10,7 +10,6 @@ import AdvantagesSection from "@/components/AdvantagesSection";
 import WhyChooseUsSection from "@/components/WhyChooseUsSection";
 import CtaBand from "@/components/CtaBand";
 import NewsSection from "@/components/NewsSection";
-import ClientsStrip from "@/components/ClientsStrip";
 import SiteFooter from "@/components/SiteFooter";
 import ClientsMarquee from "@/components/ClientsMarquee";
 
@@ -27,7 +26,7 @@ export default function Home() {
         <AdvantagesSection  />
         <WhyChooseUsSection  />
         <CtaBand />
-        <NewsSection />
+        <NewsSection  itemsToShow={3} showHeader />
         <ClientsMarquee />
         <SiteFooter />
       </main>
