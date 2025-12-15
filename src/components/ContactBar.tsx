@@ -97,7 +97,7 @@ export default function ContactBar() {
           </a>
           <a
             aria-label="Instagram"
-            href="#"
+            href="https://www.instagram.com/alvjamba.ao?igsh=c2Y3MGRoOTY2eTR3"
             className="rounded-md p-2 bg-brand-primary/10 text-brand-primary hover:bg-brand-primary hover:text-white transition"
           >
             <Instagram size={18} />
