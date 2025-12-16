@@ -16,7 +16,7 @@ export const metadata = {
 export default function ArtigosPage() {
   return (
     <>
-      <TopBar />
+      
       <ContactBar />
       <MainNav />
 

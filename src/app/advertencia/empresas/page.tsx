@@ -85,7 +85,7 @@ function TipCard({
 export default function BusinessTipsPage() {
   return (
     <>
-      <TopBar />
+      
       <ContactBar />
       <MainNav />
 

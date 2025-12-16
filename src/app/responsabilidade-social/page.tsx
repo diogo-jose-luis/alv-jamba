@@ -22,7 +22,7 @@ import ProposalDrawer from "@/components/ProposalDrawer";
 export default function ResponsabilidadeSocialPage() {
   return (
     <>
-      <TopBar />
+      
       <ContactBar />
       <MainNav />
       <main>

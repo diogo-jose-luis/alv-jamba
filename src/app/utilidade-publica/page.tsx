@@ -16,7 +16,7 @@ export const metadata = {
 export default function UtilidadePublicaPage() {
   return (
     <>
-      <TopBar />
+      
       <ContactBar />
       <MainNav />
 

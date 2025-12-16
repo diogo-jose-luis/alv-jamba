@@ -16,7 +16,7 @@ import ClientsMarquee from "@/components/ClientsMarquee";
 export default function Home() {
   return (
     <>
-      <TopBar />
+      
       <ContactBar />
       <MainNav />
       <main>

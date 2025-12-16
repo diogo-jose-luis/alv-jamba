@@ -14,7 +14,7 @@ export const metadata = {
 export default function EquipePage() {
   return (
     <>
-      <TopBar />
+      
       <ContactBar />
       <MainNav />
       <main>

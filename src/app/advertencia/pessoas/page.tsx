@@ -87,7 +87,7 @@ function TipCard({
 export default function TipsForPeoplePage() {
   return (
     <>
-      <TopBar />
+      
       <ContactBar />
       <MainNav />
 

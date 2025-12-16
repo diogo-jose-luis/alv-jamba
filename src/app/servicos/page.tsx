@@ -18,7 +18,7 @@ export const metadata = {
 export default function ServicosPage() {
   return (
     <>
-      <TopBar />
+      
       <ContactBar />
       <MainNav />
 

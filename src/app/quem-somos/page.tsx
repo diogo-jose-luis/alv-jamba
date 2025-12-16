@@ -17,7 +17,7 @@ export const metadata = {
 export default function QuemSomosPage() {
   return (
     <>
-      <TopBar />
+      
       <ContactBar />
       <MainNav />
 

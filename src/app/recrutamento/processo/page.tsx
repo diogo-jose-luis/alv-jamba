@@ -16,7 +16,7 @@ export const metadata = {
 export default function ProcessoPage() {
   return (
     <>
-      <TopBar />
+      
       <ContactBar />
       <MainNav />
       <main>

@@ -16,7 +16,7 @@ export const metadata = {
 export default function LegalReportesPage() {
   return (
     <>
-      <TopBar />
+      
       <ContactBar />
       <MainNav />
       <main>

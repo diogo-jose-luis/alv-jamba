@@ -14,7 +14,7 @@ export const metadata = {
 export default function GaleriaPage() {
   return (
     <>
-      <TopBar />
+      
       <ContactBar />
       <MainNav />
       <main>

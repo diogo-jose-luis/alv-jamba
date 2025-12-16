@@ -14,7 +14,7 @@ export const metadata = {
 export default function HistoriaPage() {
   return (
     <>
-      <TopBar />
+      
       <ContactBar />
       <MainNav />
 
