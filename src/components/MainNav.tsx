@@ -37,7 +37,8 @@ const ITEMS: Item[] = [
     href: "#",
     children: [
       { label: "Artigos", href: "/artigos" },
-      { label: "Utilidade pública", href: "/utilidade-publica" },
+      { label: "Utilidade pública", href: "/utilidade-publica" },      
+      { label: "Legal e Reportes", href: "/legal-reportes" },
       { label: "Responsabilidade social", href: "/responsabilidade-social" },
     ],
   },

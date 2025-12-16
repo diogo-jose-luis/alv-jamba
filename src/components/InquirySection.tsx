@@ -45,7 +45,7 @@ async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     >;
 
     // honeypot (sem any)
-    const gotcha = typeof data["_gotcha"] === "string" ? data["_gotcha"] : "";
+    const gotcha = typeof data["_gotcha"] == "string" ? data["_gotcha"] : "";
     if (gotcha) return;
 
     const name = String(data["name"] ?? "");

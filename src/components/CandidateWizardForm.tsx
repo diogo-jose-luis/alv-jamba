@@ -20,7 +20,7 @@ import {
 } from "lucide-react";
 import clsx from "clsx";
 
-/* ============= CONSTANTES ============= */
+/* == CONSTANTES == */
 
 const PROVINCIAS = [
   "Luanda",
@@ -67,7 +67,7 @@ const DOCS_BASE = [
   "Certificado de Trabalho",
 ] as const;
 
-/* ============= TIPOS ============= */
+/* == TIPOS == */
 
 type DocsKey = (typeof DOCS_BASE)[number];
 
@@ -121,7 +121,7 @@ type FormDataShape = {
   observacoes: string;
 };
 
-/* ============= COMPONENTE PRINCIPAL ============= */
+/* == COMPONENTE PRINCIPAL == */
 
 export default function CandidateWizardForm() {
   const [step, setStep] = useState(0);
@@ -165,8 +165,7 @@ export default function CandidateWizardForm() {
     salario: "",
     admissao: "",
     demissao: "",
-    actividades:
-      "",
+    actividades: "",
     pretensaoSalarial: "",
 
     // Passo 4 — Documentos (checklist + anexos opcionais)
@@ -209,7 +208,7 @@ export default function CandidateWizardForm() {
     []
   );
 
-  /* ======= validação simples por passo ======= */
+  /* == validação simples por passo == */
   function validateStep(idx: number): string[] {
     const errs: string[] = [];
 
@@ -272,19 +271,104 @@ export default function CandidateWizardForm() {
       setMsg({ type: "err", text: allErrs[0] });
       return;
     }
+
     setSubmitting(true);
     setMsg(null);
 
-    // MOCK de submissão (sem API)
-    await new Promise((r) => setTimeout(r, 800));
-    setSubmitting(false);
-    setMsg({
-      type: "ok",
-      text: "Candidatura enviada com sucesso, você recebera uma notificação de nossa parte dentro de 7 dias.",
-    });
+    try {
+      const fd = new FormData();
+
+      // campos simples (string/date)
+      fd.append("nome", form.nome);
+      fd.append("dataNasc", form.dataNasc);
+      fd.append("estadoCivil", form.estadoCivil || "");
+      fd.append("nacionalidade", form.nacionalidade);
+      fd.append("naturalDe", form.naturalDe || "");
+      fd.append("bi", form.bi || "");
+      fd.append("bairro", form.bairro || "");
+      fd.append("rua", form.rua || "");
+      fd.append("casa", form.casa || "");
+      fd.append("municipio", form.municipio || "");
+      fd.append("provincia", form.provincia);
+      fd.append("telefone", form.telefone);
+      fd.append("telefone2", form.telefone2 || "");
+      fd.append("email", form.email);
+      fd.append("contaBancaria", form.contaBancaria || "");
+
+      fd.append("nivelAcademico", form.nivelAcademico);
+      fd.append("curso", form.curso || "");
+      fd.append("escola", form.escola || "");
+      fd.append("inicioCurso", form.inicioCurso || "");
+      fd.append("fimCurso", form.fimCurso || "");
+      fd.append("lingua1", form.lingua1 || "");
+      fd.append("lingua1Nivel", form.lingua1Nivel || "");
+      fd.append("lingua2", form.lingua2 || "");
+      fd.append("lingua2Nivel", form.lingua2Nivel || "");
+
+      fd.append("funcaoAtual", form.funcaoAtual || "");
+      fd.append("empresaAtual", form.empresaAtual || "");
+      fd.append("salario", form.salario || "");
+      fd.append("admissao", form.admissao || "");
+      fd.append("demissao", form.demissao || "");
+      fd.append("actividades", form.actividades || "");
+      fd.append("pretensaoSalarial", form.pretensaoSalarial || "");
+
+      fd.append("areaInteresse", form.areaInteresse || "");
+      fd.append("cargoPretendido", form.cargoPretendido);
+      fd.append("disponibilidade", form.disponibilidade);
+      fd.append("inicioPrevisto", form.inicioPrevisto || "");
+      fd.append("observacoes", form.observacoes || "");
+
+      // docs (checklist) como JSON (opcional)
+      fd.append("docs", JSON.stringify(form.docs || {}));
+
+      // anexos
+      // esperado: form.anexos = { "Curriculum Vitae": File, "Bilhete de Identidade": File, ... }
+      Object.entries(form.anexos || {}).forEach(([docName, file]) => {
+        if (file instanceof File) {
+          fd.append(`anexos[${docName}]`, file);
+        }
+      });
+
+      const res = await fetch(
+        `https://sisgema-alvjamba-api.alv-jamba.com/api/candidatos`,
+        {
+          method: "POST",
+          body: fd, // IMPORTANT: não definir Content-Type manualmente
+        }
+      );
+
+      const json = await res.json().catch(() => ({}));
+
+      if (res.status == 409) {
+        setMsg({
+          type: "err",
+          text: json?.message ?? "Este e-mail já está a ser utilizado.",
+        });
+        return;
+      }
+
+      if (!res.ok) {
+        setMsg({
+          type: "err",
+          text:
+            json?.message ?? "Erro ao submeter candidatura. Tente novamente.",
+        });
+        return;
+      }
+
+      setMsg({
+        type: "ok",
+        text: "Candidatura enviada com sucesso. Você receberá uma notificação de nossa parte dentro de 7 dias.",
+      });
+    } catch {
+      setMsg({ type: "err", text: "Erro de rede. Tente novamente." });
+    } finally {
+      setSubmitting(false);
+    }
   }
 
-  /* ======= UI ======= */
+  /* == UI == */
 
   return (
     <section className="py-14 md:py-20 bg-white">
@@ -348,9 +432,7 @@ export default function CandidateWizardForm() {
               >
                 {step == 0 && <StepPessoais form={form} setForm={setForm} />}
                 {step == 1 && <StepFormacao form={form} setForm={setForm} />}
-                {step == 2 && (
-                  <StepExperiencia form={form} setForm={setForm} />
-                )}
+                {step == 2 && <StepExperiencia form={form} setForm={setForm} />}
                 {step == 3 && <StepDocs form={form} setForm={setForm} />}
                 {step == 4 && (
                   <StepPreferencias form={form} setForm={setForm} />
@@ -386,7 +468,7 @@ export default function CandidateWizardForm() {
                   disabled={submitting}
                   className="btn btn-primary disabled:opacity-70"
                 >
-                  {submitting ? "A validar..." : "Concluir (mock)"}
+                  {submitting ? "A validar..." : "Concluir candidatura"}
                 </button>
               )}
             </div>
@@ -402,7 +484,7 @@ export default function CandidateWizardForm() {
   );
 }
 
-/* ============= PASSOS ============= */
+/* == PASSOS == */
 
 function StepPessoais({
   form,
@@ -705,8 +787,9 @@ function StepDocs({
   form: FormDataShape;
   setForm: (u: (p: FormDataShape) => FormDataShape) => void;
 }) {
-
-  const inputRefs = useRef<Partial<Record<DocsKey, HTMLInputElement | null>>>({});
+  const inputRefs = useRef<Partial<Record<DocsKey, HTMLInputElement | null>>>(
+    {}
+  );
 
   return (
     <div className="space-y-5">
@@ -740,7 +823,9 @@ function StepDocs({
               <Upload size={16} /> Anexar
             </button>
             <input
-              ref={(el) => { inputRefs.current[doc] = el; }}
+              ref={(el) => {
+                inputRefs.current[doc] = el;
+              }}
               type="file"
               className="hidden"
               onChange={(e) => {
@@ -859,7 +944,7 @@ function StepPreferencias({
   );
 }
 
-/* ============= SUB-COMPONENTES UI ============= */
+/* == SUB-COMPONENTES UI == */
 
 function SectionTitle({
   children,
