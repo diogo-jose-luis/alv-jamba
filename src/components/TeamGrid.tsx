@@ -13,14 +13,14 @@ type Member = {
 };
 
 const TEAM: Member[] = [
-  { name: "Stiviandra Ribeiro de Oliveira", role: "Sócia-Gerente", image: "/team/user2.jpeg", bio: "Direção estratégica e supervisão operacional.", href: "#" },
-  { name: "António Vicente", role: "Diretor de Operações", image: "/team/user1.jpeg", bio: "Gestão de operações onshore e offshore.", href: "#" },
-  { name: "Célia Mboa", role: "RH & Formação", image: "/team/user3.jpg", bio: "Programas de capacitação e compliance.", href: "#" },
-  { name: "Paulo Neto", role: "Supervisor QRF", image: "/team/user4.jpg", bio: "Resposta rápida, protocolos e incidentes.", href: "#" },
-  { name: "Helena Costa", role: "Coordenação SOC", image: "/team/user6.jpeg", bio: "Monitorização CCTV e controlo de rondas.", href: "#" },
-  { name: "Mário Dinis", role: "Controlo de Acesso", image: "/team/user7.jpeg", bio: "Processos, credenciação e perímetros.", href: "#" },
-  { name: "Rui Armando", role: "Segurança Patrimonial", image: "/team/user5.jpg", bio: "Planos preventivos e dissuasão.", href: "#" },
-  { name: "Vera Lucas", role: "Comunicações & Logística", image: "/team/user9.jpg", bio: "Coordenação, rádio e escalas.", href: "#" },
+  { name: "Stiviandra Ribeiro de Oliveira", role: "PCA", image: "/team/stiviandra.jpg", bio: "Direção estratégica e supervisão operacional.", href: "#" },
+  { name: "Marlene Peixinho", role: "Assessora de Controlo Interno", image: "/team/marlene.jpg", bio: "Gestão de operações onshore e offshore.", href: "#" },
+  { name: "Maria De Fatima", role: "Assessora de Controlo Interno", image: "/team/fatima.jpg", bio: "Programas de capacitação e compliance.", href: "#" },
+  { name: "Claudia Peixinho", role: "Assistente Administrativa", image: "/team/claudia.jpg", bio: "Resposta rápida, protocolos e incidentes.", href: "#" },
+  { name: "Antonio Jamba", role: "Assistente de Tesouraria", image: "/team/jamba.jpg", bio: "Monitorização CCTV e controlo de rondas.", href: "#" },
+  { name: "Antonio Oliveira", role: "Responsável da Tesouraria", image: "/team/oliveira.jpg", bio: "Processos, credenciação e perímetros.", href: "#" },
+  { name: "Sara Felisberto", role: "Responsavel de Recursos Humanos", image: "/team/sara.jpg", bio: "Planos preventivos e dissuasão.", href: "#" },
+  { name: "Dongala Pedro", role: "Diretor Operacional", image: "/team/dongala.jpg", bio: "Coordenação, rádio e escalas.", href: "#" },
 ];
 
 function TeamCard({ m, i }: { m: Member; i: number }) {

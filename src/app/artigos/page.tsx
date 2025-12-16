@@ -24,7 +24,7 @@ export default function ArtigosPage() {
         <PageHero
           title="Artigos"
           subtitle="Atualizações, operações e insights da ALVJAMBA — utilidade pública, boas práticas e resposta operacional."
-          image="/hero/slide5.png"
+          image="/hero/artigos.png"
           objectPosition="center 35%"
         />
 

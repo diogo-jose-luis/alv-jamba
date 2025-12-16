@@ -23,7 +23,7 @@ export default function LegalReportesPage() {
         <PageHero
           title="Legal & Reportes"
           subtitle="Documentação em PDF para consulta e descarregamento. Regulamentos, decretos e reportes relevantes para o sector da segurança."
-          image="/hero/legal_report.jpg"
+          image="/hero/reporte.png"
           objectPosition="center 35%"
         />
 

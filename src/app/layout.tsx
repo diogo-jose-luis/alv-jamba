@@ -11,6 +11,9 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="pt" className={`${dupletSans.variable} ${dupletHeading.variable}`}>
+       <head>
+        <link rel="icon" href='@/assets/images/logo.png' type="image/x-icon" />
+      </head>
       <body className="antialiased bg-brand-bg text-brand-ink">
         {children}
       </body>

@@ -85,7 +85,7 @@ export default function AboutCompanySection({
           {/* Poster do vídeo */}
           <div className="relative w-full aspect-video bg-black/5 overflow-hidden group ring-1 ring-black/10">
             <Image
-              src="/about/about.png"
+              src="/hero/equipa.jpg"
               alt="Apresentação ALVJAMBA"
               fill
               className="object-cover"

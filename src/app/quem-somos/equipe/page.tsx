@@ -21,7 +21,7 @@ export default function EquipePage() {
         <PageHero
           title="A nossa equipa"
           subtitle="Profissionais certificados, processos sólidos e execução disciplinada."
-          image="/hero/about.png"
+          image="/hero/equipa.jpg"
           objectPosition="center top"
         />
         <TeamGrid />

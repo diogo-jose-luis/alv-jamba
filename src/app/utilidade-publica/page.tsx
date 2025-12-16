@@ -24,7 +24,7 @@ export default function UtilidadePublicaPage() {
         <PageHero
           title="Utilidade Pública"
           subtitle="Visão geral de zonas com maior incidência de furtos/assaltos e áreas com menor risco reportado, para apoio à prevenção e planeamento."
-          image="/hero/slide7.png"
+          image="/hero/safe.png"
           objectPosition="center 35%"
         />
 
