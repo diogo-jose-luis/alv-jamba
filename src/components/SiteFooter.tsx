@@ -89,7 +89,7 @@ export default function SiteFooter() {
             <h4 className="font-heading text-lg font-extrabold mb-4">SOBRE NÓS</h4>
             <div className="w-56 h-32 relative mb-4">
               <Image
-                src="/footer/about.png"
+                src="/team/team.jpg"
                 alt="ALVJAMBA"
                 fill
                 className="object-cover"

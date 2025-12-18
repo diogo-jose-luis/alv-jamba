@@ -13,14 +13,14 @@ type Member = {
 };
 
 const TEAM: Member[] = [
-  { name: "Stiviandra Ribeiro de Oliveira", role: "PCA", image: "/team/stiviandra.jpg", bio: "Direção estratégica e supervisão operacional.", href: "#" },
-  { name: "Marlene Peixinho", role: "Assessora de Controlo Interno", image: "/team/marlene.jpg", bio: "Gestão de operações onshore e offshore.", href: "#" },
-  { name: "Maria De Fatima", role: "Assessora de Controlo Interno", image: "/team/fatima.jpg", bio: "Programas de capacitação e compliance.", href: "#" },
-  { name: "Claudia Peixinho", role: "Assistente Administrativa", image: "/team/claudia.jpg", bio: "Resposta rápida, protocolos e incidentes.", href: "#" },
-  { name: "Antonio Jamba", role: "Assistente de Tesouraria", image: "/team/jamba.jpg", bio: "Monitorização CCTV e controlo de rondas.", href: "#" },
-  { name: "Antonio Oliveira", role: "Responsável da Tesouraria", image: "/team/oliveira.jpg", bio: "Processos, credenciação e perímetros.", href: "#" },
-  { name: "Sara Felisberto", role: "Responsavel de Recursos Humanos", image: "/team/sara.jpg", bio: "Planos preventivos e dissuasão.", href: "#" },
-  { name: "Dongala Pedro", role: "Diretor Operacional", image: "/team/dongala.jpg", bio: "Coordenação, rádio e escalas.", href: "#" },
+  { name: "Stiviandra Ribeiro De Oliveira", role: "PCA", image: "/team/stiviandra2.jpg", bio: "Direção estratégica e supervisão operacional.", href: "#" },
+  { name: "Marlene Peixinho", role: "Assessora de Controlo Interno", image: "/team/marlene2.jpg", bio: "Gestão de operações onshore e offshore.", href: "#" },
+  { name: "Ulrike De Oliveira", role: "Responsavel de Aprovisionamento", image: "/team/ulrike.jpg", bio: "Programas de capacitação e compliance.", href: "#" },
+  { name: "Maria De Fatima", role: "Assessora de Controlo Interno", image: "/team/fatima2.jpg", bio: "Programas de capacitação e compliance.", href: "#" },
+  { name: "Claudia Peixinho", role: "Assistente Administrativa", image: "/team/claudia2.jpg", bio: "Resposta rápida, protocolos e incidentes.", href: "#" },
+  { name: "Antonio Jamba", role: "Assistente de Tesouraria", image: "/team/jamba2.jpg", bio: "Monitorização CCTV e controlo de rondas.", href: "#" },
+  { name: "Antonio Oliveira", role: "Responsável da Tesouraria", image: "/team/oliveira2.jpg", bio: "Processos, credenciação e perímetros.", href: "#" },
+  { name: "Sara Felisberto", role: "Responsavel de Recursos Humanos", image: "/team/sara2.jpg", bio: "Planos preventivos e dissuasão.", href: "#" },
 ];
 
 function TeamCard({ m, i }: { m: Member; i: number }) {

@@ -25,7 +25,7 @@ export default function QuemSomosPage() {
         <PageHero
           title="Quem somos"
           subtitle="Confiança, disciplina e processos — a base da nossa proteção."
-          image="/hero/about.png"
+          image="/hero/team.jpg"
           objectPosition="center top" // mantém o topo visível
         />
 

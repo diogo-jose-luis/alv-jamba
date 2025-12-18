@@ -124,7 +124,7 @@ export default function WhyChooseUsSection() {
         {/* Coluna direita: imagem + painel de métricas */}
         <div ref={ref} className="relative">
           <Image
-            src="/why/guard.png"
+            src="/team/team.jpg"
             alt="Guarda de segurança"
             width={1200}
             height={800}

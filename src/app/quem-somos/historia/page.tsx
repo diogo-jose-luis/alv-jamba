@@ -22,7 +22,7 @@ export default function HistoriaPage() {
         <PageHero
           title="História"
           subtitle="Expansão, disciplina e resultados — a nossa jornada até aqui."
-          image="/hero/about.png"
+          image="/hero/equipa.jpg"
           objectPosition="center top"
         />
 
