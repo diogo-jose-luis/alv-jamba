@@ -405,7 +405,7 @@ function RequestInfoForm({ defaultZone }: { defaultZone?: string }) {
         className="p-6 md:p-7"
         onSubmit={(e) => {
           e.preventDefault();
-          alert("Pedido submetido (exemplo). Liga isto ao teu endpoint.");
+          alert("Pedido submetido.");
         }}
       >
         <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
