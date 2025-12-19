@@ -17,7 +17,7 @@ const TEAM: Member[] = [
   { name: "Marlene Peixinho", role: "Assessora de Controlo Interno", image: "/team/marlene2.jpg", bio: "Gestão de operações onshore e offshore.", href: "#" },
   { name: "Ulrike De Oliveira", role: "Responsavel de Aprovisionamento", image: "/team/ulrike.jpg", bio: "Programas de capacitação e compliance.", href: "#" },
   { name: "Maria De Fatima", role: "Assessora de Controlo Interno", image: "/team/fatima2.jpg", bio: "Programas de capacitação e compliance.", href: "#" },
-  { name: "Claudia Peixinho", role: "Assistente Administrativa", image: "/team/claudia2.jpg", bio: "Resposta rápida, protocolos e incidentes.", href: "#" },
+  { name: "Claudia Sebastião", role: "Assistente Administrativa", image: "/team/claudia2.jpg", bio: "Resposta rápida, protocolos e incidentes.", href: "#" },
   { name: "Antonio Jamba", role: "Assistente de Tesouraria", image: "/team/jamba2.jpg", bio: "Monitorização CCTV e controlo de rondas.", href: "#" },
   { name: "Antonio Oliveira", role: "Responsável da Tesouraria", image: "/team/oliveira2.jpg", bio: "Processos, credenciação e perímetros.", href: "#" },
   { name: "Sara Felisberto", role: "Responsavel de Recursos Humanos", image: "/team/sara2.jpg", bio: "Planos preventivos e dissuasão.", href: "#" },
