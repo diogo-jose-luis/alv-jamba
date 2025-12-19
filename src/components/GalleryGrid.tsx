@@ -13,14 +13,14 @@ type Shot = {
 };
 
 const SHOTS: Shot[] = [
-  { src: "/services/s5a.png", alt: "Segurança executiva no aeródromo", date: "12 Jul 2024", caption: "Proteção executiva e escolta em pista." },
-  { src: "/services/slide4.png", alt: "Guarda em perímetro", date: "18 Jul 2024", caption: "Controlo de acesso e perímetro." },
-  { src: "/services/s10.png", alt: "Escolta motorizada", date: "22 Jul 2024", caption: "Convoi e escolta de viaturas." },
-  { src: "/services/s8.png", alt: "Supervisor em ronda", date: "02 Ago 2024", caption: "Ronda e comunicação operacional." },
-  { src: "/services/s4.png", alt: "Back-office de operações", date: "11 Ago 2024", caption: "SOC, CCTV e despacho." },
-  { src: "/services/s1a.png", alt: "Operador de vigilância", date: "19 Ago 2024", caption: "Observação e protocolo QRF." },
-  { src: "/services/s5.png", alt: "Triagem e controlo", date: "25 Ago 2024", caption: "Fluxo de pessoas e triagem." },
-  { src: "/services/s3.png", alt: "Comunicação em missão", date: "03 Set 2024", caption: "Logística e coordenação em campo." },
+  { src: "/team/operacoes (1).jpeg", alt: "Segurança executiva no aeródromo", date: "12 Jul 2024", caption: "Proteção executiva e escolta em pista." },
+  { src: "/team/operacoes (2).jpeg", alt: "Guarda em perímetro", date: "18 Jul 2024", caption: "Controlo de acesso e perímetro." },
+  { src: "/team/operacoes (3).jpeg", alt: "Escolta motorizada", date: "22 Jul 2024", caption: "Convoi e escolta de viaturas." },
+  { src: "/team/operacoes (4).jpeg", alt: "Supervisor em ronda", date: "02 Ago 2024", caption: "Ronda e comunicação operacional." },
+  { src: "/team/operacoes (5).jpeg", alt: "Back-office de operações", date: "11 Ago 2024", caption: "SOC, CCTV e despacho." },
+  { src: "/team/operacoes (6).jpeg", alt: "Operador de vigilância", date: "19 Ago 2024", caption: "Observação e protocolo QRF." },
+  { src: "/team/operacoes (7).jpeg", alt: "Triagem e controlo", date: "25 Ago 2024", caption: "Fluxo de pessoas e triagem." },
+  { src: "/team/operacoes (8).jpeg", alt: "Comunicação em missão", date: "03 Set 2024", caption: "Logística e coordenação em campo." },
 ];
 
 export default function GalleryGrid() {

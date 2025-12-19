@@ -21,8 +21,8 @@ export default function GaleriaPage() {
         <PageHero
           title="Galeria"
           subtitle="Operações, protocolos e momentos em campo."
-          image="/hero/about.png"
-          objectPosition="center top"
+          image="/team/operacoes (8).jpeg"
+          objectPosition="center center"
         />
         <GalleryGrid />
       </main>
