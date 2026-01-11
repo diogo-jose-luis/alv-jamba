@@ -9,11 +9,6 @@ type Slide = { src: string; title: string; subtitle?: string };
 
 const SLIDES: Slide[] = [
   {
-    src: "/hero/natal.png",
-    title: "A TODOS COLABORADORES E PARCEIROS UM FELIZ NATAL E PRÓSPERO ANO NOVO",
-    subtitle: "A nossa equipa deseja-lhe boas festas!",
-  },
-  {
     src: "/hero/slide1.png",
     title: "SER SEGURANÇA É UM PROCESSO",
     subtitle: "Proteção, Defesa & Controlo de Acesso",
